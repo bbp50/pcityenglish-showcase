@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESL Video Exercises — P-City English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:   #FAF8F2;
+  --ink:     #111111;
+  --muted:   #888888;
+  --gold:    #C9A84C;
+  --rule:    #D6C9A8;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+}
+
+html { font-size: 16px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.7;
+}
+
+/* ─── HOME SCREEN ─── */
+#home {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+}
+
+.home-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.home-back:hover { color: var(--gold); }
+
+.home-header {
+  text-align: center;
+  padding: 2rem 0 2.5rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 3rem;
+}
+
+.home-header .logo {
+  width: 180px;
+  max-width: 60%;
+  margin-bottom: 1.8rem;
+  opacity: 0.95;
+}
+
+.home-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.home-header .subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.home-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 1.2rem auto 0;
+}
+
+/* ─── CARD GRID ─── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 680px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 681px) and (max-width: 900px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.video-card {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.5rem 1.4rem 1.2rem;
+  cursor: pointer;
+  background: var(--cream);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+}
+.video-card::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 0.9rem;
+  transition: width 0.2s;
+}
+.video-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.1);
+  transform: translateY(-1px);
+}
+.video-card:hover::before { width: 40px; }
+
+.card-num {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 0.45rem;
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.card-channel {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.9rem;
+}
+.card-arrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── HOME BUTTON (on video pages) ─── */
+#home-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.35rem 0.8rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+#home-btn:hover { border-color: var(--gold); color: var(--gold); }
+#home-btn.hidden { display: none; }
+
+/* ─── VIDEO PAGE ─── */
+.video-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 5rem;
+}
+.video-page.hidden { display: none; }
+
+.video-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.video-page h2 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.video-rule {
+  margin: 1rem 0 1.8rem;
+}
+.video-rule::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+}
+
+/* ─── YouTube link ─── */
+.yt-link-wrap {
+  margin-bottom: 2rem;
+}
+.yt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.82rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: var(--font-body);
+}
+.yt-link:hover {
+  border-color: var(--gold);
+  box-shadow: 0 2px 10px rgba(201,168,76,0.1);
+}
+.yt-play {
+  color: #c00;
+  font-size: 1.1rem;
+}
+
+/* ─── Section heads ─── */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.4rem;
+}
+.section-head span {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Questions ─── */
+.questions {
+  list-style: none;
+  counter-reset: q;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+.questions li {
+  counter-increment: q;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.questions li:last-child { border-bottom: none; }
+.questions li::before {
+  content: counter(q);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--gold);
+  min-width: 1.2rem;
+  padding-top: 0.2rem;
+  font-weight: 600;
+}
+
+/* ─── Vocab grid ─── */
+.vocab-grid {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.vocab-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+.vocab-row:last-child { border-bottom: none; }
+
+.vocab-ctx { color: var(--ink); line-height: 1.55; }
+.vocab-ctx strong { font-style: normal; }
+
+.vocab-blank {
+  min-height: 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink);
+  transition: border-color 0.15s;
+  padding: 0 0.2rem;
+  line-height: 1.55;
+}
+.vocab-blank:focus { border-bottom-color: var(--gold); }
+
+/* ─── Copy vocab button ─── */
+.copy-vocab-btn {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.copy-vocab-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── Notes ─── */
+.notes-area {
+  margin-top: 2rem;
+}
+.notes-label {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.notes-box {
+  width: 100%;
+  min-height: 90px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.notes-box:focus { border-color: var(--gold); }
+
+@media (max-width: 520px) {
+  .vocab-row { grid-template-columns: 1fr; }
+  .video-page h2 { font-size: 1.5rem; }
+}
+
+/* ─── Print ─── */
+@media print {
+  #home { display: none !important; }
+  #home-btn { display: none !important; }
+  .video-page.hidden { display: none !important; }
+  .yt-link { display: none !important; }
+  .notes-box { border-color: #bbb; min-height: 80px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HOME SCREEN
+══════════════════════════════════════ -->
+<div id="home">
+  <a class="home-back" href="index.html">&larr; Back to Home</a>
+  <div class="home-header">
+    <img class="logo" src="PCityEnglish_logonobg.png" alt="P-City English">
+    <h1>ESL Video Exercises</h1>
+    <p class="subtitle">Business-Focused Lessons</p>
+    <div class="home-rule"></div>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="video-card" onclick="showVideo(1)">
+      <p class="card-num">01</p>
+      <p class="card-title">Shark Tank: The Sharks Take an Emotional Trip to the Farm</p>
+      <p class="card-channel">ABC — Shark Tank</p>
+      <span class="card-arrow">Open &rarr;</span>
+    </div>
+
+    <div class="video-card" onclick="showVideo(2)">
+      <p class="card-num">02</p>
+      <p class="card-title">Commander's Intent Enables Great Leadership</p>
+      <p class="card-channel">Leadership Talk</p>
+      <span class="card-arrow">Open &rarr;</span>
+    </div>
+
+    <div class="video-card" onclick="showVideo(9)">
+      <p class="card-num">03</p>
+      <p class="card-title">What Causes Economic Bubbles?</p>
+      <p class="card-channel">TED-Ed</p>
+      <span class="card-arrow">Open &rarr;</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     HOME BUTTON (video pages only)
+══════════════════════════════════════ -->
+<button id="home-btn" class="hidden" onclick="showHome()">&#8962; Home</button>
+
+
+<!-- ══════════════════════════════════════
+     VIDEO 01 — SHARK TANK
+══════════════════════════════════════ -->
+<div class="video-page hidden" id="video-1">
+  <p class="video-eyebrow">Video 01 &middot; ABC — Shark Tank</p>
+  <h2>The Sharks Take an Emotional Trip to the Farm</h2>
+  <div class="video-rule"></div>
+
+  <div class="yt-link-wrap">
+    <a class="yt-link" href="https://www.youtube.com/watch?v=LZEY15Fsjgk" target="_blank" rel="noopener">
+      <span class="yt-play">&#9654;</span> Watch on YouTube — "The Sharks Take an Emotional Trip to the Farm"
+    </a>
+  </div>
+
+  <div class="section-head"><span>Warmup</span></div>
+  <ol class="questions">
+    <li><span>Have you ever watched Shark Tank?</span></li>
+    <li><span>What makes a business pitch good or bad?</span></li>
+    <li><span>What are some stereotypes about farmers?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary</span><button class="copy-vocab-btn" onclick="copyVocab(this)">Copy</button></div>
+  <div class="vocab-grid">
+    <div class="vocab-row"><p class="vocab-ctx">"There's not enough <strong>margin</strong> for me —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"It protects trees from <strong>frost</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"It's a <strong>noble</strong> cause —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"The <strong>nozzle</strong> shoots water down —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"You're <strong>trespassing</strong> in my grove —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"I am a <strong>distributor</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"We can really <strong>scale</strong> this up —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Farmers are the <strong>cornerstone</strong> of America —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"I like everything you <strong>stand for</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+  </div>
+
+  <div class="section-head"><span>Discussion</span></div>
+  <ol class="questions">
+    <li><span>What do you think about the argument over the price? Should Johnny raise the price or keep it at $5 per unit?</span></li>
+    <li><span>Do you think the deal he made with the Shark was good?</span></li>
+    <li><span>Do you think that kindness and humanity sometimes gets in the way of good business decisions?</span></li>
+    <li><span>Can you think of any other businesses that really care about their clients like Johnny?</span></li>
+    <li><span>Can you think of any other great investments that led to high returns?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary Questions</span></div>
+  <ol class="questions">
+    <li><span>What are the <strong>margins</strong> like in your industry? Are they considered high or low?</span></li>
+    <li><span>Have you ever felt like you were "<strong>trespassing</strong>" — entering someone's professional territory uninvited?</span></li>
+    <li><span>What does it mean for a company to truly "<strong>stand for</strong>" something? Can you give an example from your country or your field?</span></li>
+    <li><span>What would it take for your company or team to genuinely <strong>scale</strong> up its impact or reach?</span></li>
+  </ol>
+
+  <div class="notes-area">
+    <label class="notes-label">Notes</label>
+    <div class="notes-box" contenteditable="true">&#8226; </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VIDEO 02 — COMMANDER'S INTENT
+══════════════════════════════════════ -->
+<div class="video-page hidden" id="video-2">
+  <p class="video-eyebrow">Video 02 &middot; Leadership</p>
+  <h2>Commander's Intent Enables Great Leadership</h2>
+  <div class="video-rule"></div>
+
+  <div class="yt-link-wrap">
+    <a class="yt-link" href="https://www.youtube.com/watch?v=RvUW2-oUOGo" target="_blank" rel="noopener">
+      <span class="yt-play">&#9654;</span> Watch on YouTube — "Commander's Intent Enables Great Leadership"
+    </a>
+  </div>
+
+  <div class="section-head"><span>Warmup</span></div>
+  <ol class="questions">
+    <li><span>On a scale from 1 to 10, how direct are you?</span></li>
+    <li><span>Does somebody give you tasks at work? Do you give someone tasks?</span></li>
+    <li><span>How are the tasks communicated?</span></li>
+    <li><span>How often do you meet with your team to discuss tasks and goals? How productive are those meetings?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary</span><button class="copy-vocab-btn" onclick="copyVocab(this)">Copy</button></div>
+  <div class="vocab-grid">
+    <div class="vocab-row"><p class="vocab-ctx">"At the <strong>culmination</strong> of my career —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"I was a <strong>Colonel</strong> in the Army —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"I've used that <strong>framework</strong> for years —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Leaders get too <strong>granular</strong> in the 'what' —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"One of my <strong>peers</strong> was not a pilot —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"We actually <strong>stunt</strong> their growth —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"It wasn't said <strong>explicitly</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"You provide <strong>latitude</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"You've actually <strong>stoked</strong> innovation —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+  </div>
+
+  <div class="section-head"><span>Discussion</span></div>
+  <ol class="questions">
+    <li><span>What can civilians learn from how the military operates?</span></li>
+    <li><span>The speaker talks about 'meeting the mark' in a way other than what the leader had in mind. Have you ever found a different way to do a task than what was expected?</span></li>
+    <li><span>What standards do you set for yourself, and what standards are set for you?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary Questions</span></div>
+  <ol class="questions">
+    <li><span>Where do you hope to be at the <strong>culmination</strong> of your career?</span></li>
+    <li><span>How do you feel about getting <strong>granular</strong> instructions?</span></li>
+    <li><span>What can lead to <strong>stunted</strong> career growth? What can <strong>stoke</strong> career growth?</span></li>
+  </ol>
+
+  <div class="notes-area">
+    <label class="notes-label">Notes</label>
+    <div class="notes-box" contenteditable="true">&#8226; </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VIDEO 09 — ECONOMIC BUBBLES
+══════════════════════════════════════ -->
+<div class="video-page hidden" id="video-9">
+  <p class="video-eyebrow">Video 03 &middot; TED-Ed</p>
+  <h2>What Causes Economic Bubbles?</h2>
+  <div class="video-rule"></div>
+
+  <div class="yt-link-wrap">
+    <a class="yt-link" href="https://www.youtube.com/watch?v=I5ZR0jMlxX0" target="_blank" rel="noopener">
+      <span class="yt-play">&#9654;</span> Watch on YouTube — "What Causes Economic Bubbles?" &middot; TED-Ed
+    </a>
+  </div>
+
+  <div class="section-head"><span>Warmup</span></div>
+  <ol class="questions">
+    <li><span>Do you invest in stocks, crypto, property, or anything else? How did you start?</span></li>
+    <li><span>Have you ever bought into a trend or craze and later regretted it?</span></li>
+    <li><span>What do you know about the dot-com crash, the 2008 housing crisis, or tulip mania?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary</span><button class="copy-vocab-btn" onclick="copyVocab(this)">Copy</button></div>
+  <div class="vocab-grid">
+    <div class="vocab-row"><p class="vocab-ctx">"The Dutch tulip craze was driven by reckless <strong>speculation</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Prices became wildly <strong>irrational</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Asset prices can <strong>inflate</strong> far beyond their real value —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"When the bubble finally <strong>burst</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Every financial <strong>mania</strong> has followed the same arc —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"Tulip bulbs were grotesquely <strong>overvalued</strong> —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"A market <strong>correction</strong> restores prices —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+    <div class="vocab-row"><p class="vocab-ctx">"A <strong>surplus</strong> of supply flooded the market —"</p><div class="vocab-blank" contenteditable="true"></div></div>
+  </div>
+
+  <div class="section-head"><span>Discussion</span></div>
+  <ol class="questions">
+    <li><span>Do you think any asset or market today is in a bubble — crypto, AI stocks, real estate?</span></li>
+    <li><span>Can individual investors protect themselves from bubbles, or are they always at the mercy of the market?</span></li>
+    <li><span>Why do people keep repeating the same economic mistakes throughout history?</span></li>
+    <li><span>What role does psychology — fear, greed, herd behavior — play in financial markets?</span></li>
+  </ol>
+
+  <div class="section-head"><span>Vocabulary Questions</span></div>
+  <ol class="questions">
+    <li><span>Can you think of a modern example of <strong>irrational</strong> behavior — in a market, a company, or everyday life?</span></li>
+    <li><span>Have you ever been caught up in a <strong>mania</strong> or craze that you later regretted?</span></li>
+    <li><span>What's the difference between smart investing and risky <strong>speculation</strong>?</span></li>
+    <li><span>When something seems wildly <strong>overvalued</strong> — a product, a company, a trend — what do you do?</span></li>
+  </ol>
+
+  <div class="notes-area">
+    <label class="notes-label">Notes</label>
+    <div class="notes-box" contenteditable="true">&#8226; </div>
+  </div>
+</div>
+
+
+<script>
+function showVideo(num) {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('home-btn').classList.remove('hidden');
+  var page = document.getElementById('video-' + num);
+  if (page) page.classList.remove('hidden');
+  window.scrollTo({ top: 0 });
+}
+
+function showHome() {
+  document.querySelectorAll('.video-page').forEach(function(p) { p.classList.add('hidden'); });
+  document.getElementById('home').style.display = '';
+  document.getElementById('home-btn').classList.add('hidden');
+  window.scrollTo({ top: 0 });
+}
+
+function copyVocab(btn) {
+  var grid = btn.closest('.section-head').nextElementSibling;
+  if (!grid || !grid.classList.contains('vocab-grid')) return;
+  var lines = [];
+  grid.querySelectorAll('.vocab-row').forEach(function(row) {
+    var ctx = row.querySelector('.vocab-ctx');
+    var blank = row.querySelector('.vocab-blank');
+    if (ctx) lines.push(ctx.textContent.trim() + '\t' + (blank ? blank.textContent.trim() : ''));
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied \u2713';
+    setTimeout(function() { btn.textContent = orig; }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

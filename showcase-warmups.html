@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business English Warm-Ups — P-City English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF8F2;
+    --ink:     #111111;
+    --muted:   #888888;
+    --gold:    #C9A84C;
+    --rule:    #D6C9A8;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Lora', Georgia, serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+  }
+
+  /* ─── Back link ─── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 2rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--gold); }
+
+  /* ─── Header ─── */
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-header .logo {
+    width: 180px;
+    max-width: 60%;
+    margin-bottom: 1.8rem;
+    opacity: 0.95;
+  }
+
+  .header-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.2rem auto;
+  }
+
+  .site-header h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .site-header .subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── Tab bar ─── */
+  .tense-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.7rem 1.5rem;
+  }
+
+  .tense-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .tense-btn {
+    flex-shrink: 0;
+    padding: 0.3rem 0.85rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .tense-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .tense-btn.active { background: var(--gold); border-color: var(--gold); color: var(--cream); }
+
+  /* ─── Sections ─── */
+  .tense-section { display: none; }
+  .tense-section.visible { display: block; }
+
+  .tense-intro {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 2.5rem 0;
+  }
+
+  .tense-intro h2 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .tense-intro .tense-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .tense-intro .tense-note {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.4rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ─── Topic block ─── */
+  .topic {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem 2.5rem;
+  }
+
+  .topic-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .topic h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-rule {
+    margin-bottom: 1.2rem;
+  }
+  .topic-rule::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .questions {
+    list-style: none;
+    counter-reset: q;
+    padding: 0;
+    margin-bottom: 1.8rem;
+  }
+
+  .questions li {
+    counter-increment: q;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .questions li:last-child { border-bottom: none; }
+
+  .questions li::before {
+    content: counter(q);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--gold);
+    min-width: 1.2rem;
+    padding-top: 0.2rem;
+    font-weight: 600;
+  }
+
+  /* ─── Notes ─── */
+  .notes-area {
+    position: relative;
+  }
+
+  .notes-label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .notes-box {
+    width: 100%;
+    min-height: 100px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.15s;
+    line-height: 1.75;
+  }
+  .notes-box:focus { border-color: var(--gold); }
+
+  .copy-btn {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.2rem 0.55rem;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .copy-btn.copied { color: #1a6b1a; border-color: #1a6b1a; }
+
+  .page-end { height: 5rem; }
+
+  /* ─── Print ─── */
+  @media print {
+    body { background: #fff; }
+    .back-link, .tense-nav-wrap { display: none; }
+    .tense-section { display: block !important; }
+    .copy-btn { display: none; }
+    .topic-eyebrow, .tense-intro .tense-label, .questions li::before { color: #B8924A; }
+  }
+
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Home</a>
+
+<header class="site-header">
+  <img class="logo" src="PCityEnglish_logonobg.png" alt="P-City English">
+  <div class="header-rule"></div>
+  <h1>Business English Warm-Ups</h1>
+  <p class="subtitle">Communication-Focused Discussion Starters</p>
+</header>
+
+<!-- ─── Tab bar ─── -->
+<div class="tense-nav-wrap">
+  <nav class="tense-nav" role="tablist">
+    <button class="tense-btn active" onclick="showTopic('topic-01', this)" role="tab">Sales Pitch</button>
+    <button class="tense-btn"        onclick="showTopic('topic-02', this)" role="tab">Conference</button>
+    <button class="tense-btn"        onclick="showTopic('topic-03', this)" role="tab">TED / Lightning Talk</button>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     TOPIC 01 — Making a Sales Pitch
+════════════════════════════════════════════════════════ -->
+<section class="tense-section visible" id="topic-01">
+  <div class="tense-intro">
+    <p class="tense-label">Topic 01</p>
+    <h2>Making a Sales Pitch</h2>
+    <p class="tense-note">Pitching a product or service to clients, investors, or procurement teams.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Discussion</p>
+    <h3>Opening Strong</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>How do you typically open a sales pitch — with a statistic, a story, or a question? Why?</span></li>
+      <li><span>What's the most important thing to find out about your audience before you pitch to them?</span></li>
+      <li><span>How do you handle a prospect who seems uninterested in the first two minutes?</span></li>
+      <li><span>What's the difference between selling features and selling benefits? Can you give an example from your industry?</span></li>
+      <li><span>How do you close a pitch and move toward a next step without being too pushy?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     TOPIC 02 — Presenting at a Conference
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="topic-02">
+  <div class="tense-intro">
+    <p class="tense-label">Topic 02</p>
+    <h2>Presenting at a Conference</h2>
+    <p class="tense-note">Delivering a talk to a professional audience and managing the Q&amp;A session.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Discussion</p>
+    <h3>Stage Presence &amp; Q&amp;A</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What do you do in the first 60 seconds of a conference presentation to capture the audience's attention?</span></li>
+      <li><span>How do you structure a 20-minute conference talk differently from a client presentation?</span></li>
+      <li><span>What's your strategy when someone asks a question you don't know the answer to?</span></li>
+      <li><span>How do you manage nerves before stepping onto a stage in front of a large audience?</span></li>
+      <li><span>What makes a conference presentation memorable compared to a forgettable one?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     TOPIC 03 — Giving a Talk (TED / Lightning Talk)
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="topic-03">
+  <div class="tense-intro">
+    <p class="tense-label">Topic 03</p>
+    <h2>Giving a Talk</h2>
+    <p class="tense-note">Delivering a TED-style or lightning talk — short, focused, and story-driven.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Discussion</p>
+    <h3>Short-Form Speaking</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What is the biggest challenge of having only 5–10 minutes to deliver a talk?</span></li>
+      <li><span>How do you decide what to leave out when you have very limited time to speak?</span></li>
+      <li><span>Why do the best TED talks tend to center on a single idea? Do you agree with this approach?</span></li>
+      <li><span>How do you make a short talk feel personal and authentic rather than rehearsed?</span></li>
+      <li><span>Have you ever given or attended a lightning talk? What made it effective or ineffective?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<div class="page-end"></div>
+
+<script>
+  function showTopic(id, btn) {
+    document.querySelectorAll('.tense-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.tense-btn').forEach(function(b) { b.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if (target) target.classList.add('visible');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('copy-btn')) return;
+    var btn = e.target;
+    var textarea = btn.closest('.notes-area').querySelector('.notes-box');
+    navigator.clipboard.writeText(textarea.value).then(function() {
+      btn.textContent = 'Copied \u2713';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+</script>
+
+</body>
+</html>

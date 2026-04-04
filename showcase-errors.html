@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business English: Find the Mistakes — P-City English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --cream: #FAF8F2;
+  --ink: #111111;
+  --gold: #C9A84C;
+  --rule: #D6C9A8;
+  --muted: #888888;
+  --red: #B03030;
+  --green: #1a6b1a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.9;
+}
+
+/* ── BACK LINK ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--gold); }
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 2rem 2rem 2.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .logo { width: 170px; margin-bottom: 1.5rem; }
+.site-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.01em;
+}
+.site-header .tagline {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.header-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto;
+}
+
+/* ── LEVEL PANEL ── */
+.level-panel { max-width: 820px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+
+.level-intro {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  border-left: 2px solid var(--gold);
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.65;
+}
+.level-intro strong { color: var(--ink); }
+
+/* ── PARAGRAPH CARD ── */
+.para-card {
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.75rem 2rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.para-card::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.para-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.para-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: var(--font-body);
+}
+.para-num {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--rule);
+  margin-right: 0.5rem;
+  font-family: var(--font-body);
+}
+.counter {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  white-space: nowrap;
+}
+.counter.complete { color: var(--gold); }
+
+.para-text {
+  font-size: 1rem;
+  margin-bottom: 1.35rem;
+  color: var(--ink);
+}
+
+/* ── SLIDE BLOCK ── */
+.para-slide {
+  background: #f5f3ee;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.35rem;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.para-slide .slide-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.5rem;
+}
+.para-slide ul { padding-left: 1.4rem; margin-top: 0.4rem; }
+.para-slide ul li { margin-bottom: 0.3rem; }
+
+/* ── EMAIL BLOCK ── */
+.para-email {
+  background: white;
+  border: 1px solid #d0cbc0;
+  border-radius: 3px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.35rem;
+  font-size: 0.97rem;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.para-email .email-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+  line-height: 1.8;
+}
+.para-email .email-meta strong { color: var(--ink); }
+
+/* ── MISTAKE SPANS ── */
+span.mistake {
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.12s;
+}
+span.mistake:hover { background: rgba(176,48,48,0.07); }
+span.mistake.hinted {
+  border-bottom: 1.5px dashed var(--red);
+  padding-bottom: 1px;
+}
+span.mistake.revealed { cursor: default; }
+span.mistake.revealed:hover { background: transparent; }
+
+del.wrong-text {
+  color: var(--red);
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+}
+span.correct-text {
+  color: var(--green);
+  font-weight: 600;
+}
+span.deletion-label {
+  color: var(--muted);
+  font-size: 0.72em;
+  font-style: italic;
+}
+
+/* ── CONTROLS ── */
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.btn-hint {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid rgba(176,48,48,0.35);
+}
+.btn-hint:hover { background: rgba(176,48,48,0.06); border-color: var(--red); }
+.btn-reveal {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid rgba(26,107,26,0.35);
+}
+.btn-reveal:hover { background: rgba(26,107,26,0.06); border-color: var(--green); }
+.btn-reset {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+}
+.btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+.btn-copy {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.45);
+  margin-left: auto;
+}
+.btn-copy:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+.btn-copy.copied { color: var(--green); border-color: var(--green); }
+
+@media (max-width: 640px) {
+  .site-header { padding: 2rem 1.25rem 1.75rem; }
+  .level-panel { padding: 1.5rem 1rem 3rem; }
+  .para-card { padding: 1.25rem 1.1rem 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Home</a>
+
+<header class="site-header">
+  <img class="logo" src="PCityEnglish_logonobg.png" alt="P-City English">
+  <h1>Business English: Find the Mistakes</h1>
+  <p class="tagline">Error Correction &nbsp;&middot;&nbsp; American English &nbsp;&middot;&nbsp; B1–B2 Intermediate</p>
+  <div class="header-rule"></div>
+</header>
+
+<div class="level-panel">
+  <div class="level-intro">
+    <strong>How it works:</strong> Each text below contains 6–8 mistakes. Click any word you think is wrong to reveal the correction. Use <em>Show Locations</em> for a hint, <em>Reveal All</em> to see every mistake, or <em>Reset</em> to start over. Mistakes include incorrect prepositions, wrong verb forms, confused word pairs, and article errors.
+  </div>
+
+  <!-- ─── 1. Client Apology Email ─── -->
+  <div class="para-card" id="p-b1">
+    <div class="para-header">
+      <div><span class="para-num">1.</span><span class="para-label">Client Apology Email</span></div>
+      <span class="counter" id="ctr-b1">0 / 7 revealed</span>
+    </div>
+    <div class="para-email">
+      <div class="email-meta">
+        <strong>To:</strong> j.thornton@primuslogistics.com<br>
+        <strong>Subject:</strong> Regarding the Delay in Your Shipment
+      </div>
+      <div class="para-text" style="margin-bottom:0">
+        Dear Mr. Thornton,<br><br>
+        I am writing to apologize <span class="mistake" data-correct="for">about</span> the delay in processing your most recent order. We <span class="mistake" data-correct="are aware">are conscious</span> that this has caused significant disruption <span class="mistake" data-correct="to">for</span> your operations, and we take full responsibility <span class="mistake" data-correct="for">of</span> the error. The issue <span class="mistake" data-correct="arose">has arised</span> from a systems failure in our warehouse management platform. We have since <span class="mistake" data-correct="resolved">resoluted</span> the problem and your shipment is now <span class="mistake" data-correct="on its way">in its way</span>. We greatly value your partnership and hope to <span class="mistake" data-correct="make it up to">make it for</span> you with expedited delivery at no additional charge.<br><br>
+        Sincerely,<br>
+        Dana Keller, Account Manager
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn btn-hint" onclick="showLocations('b1')">Show Locations</button>
+      <button class="btn btn-reveal" onclick="revealAll('b1')">Reveal All</button>
+      <button class="btn btn-reset" onclick="resetParagraph('b1')">Reset</button>
+    </div>
+  </div>
+
+  <!-- ─── 2. Sales Deck Slide ─── -->
+  <div class="para-card" id="p-b2">
+    <div class="para-header">
+      <div><span class="para-num">2.</span><span class="para-label">Sales Deck Slide</span></div>
+      <span class="counter" id="ctr-b2">0 / 6 revealed</span>
+    </div>
+    <div class="para-slide">
+      <div class="slide-title">Why Choose NovaBridge? — Key Differentiators</div>
+      <ul>
+        <li><span class="mistake" data-correct="Proven">Proved</span> track record: 98% client retention <span class="mistake" data-correct="over">during</span> the past five years</li>
+        <li>Dedicated account team with <span class="mistake" data-correct="an">a</span> average response time under two hours</li>
+        <li>Fully <span class="mistake" data-correct="scalable">scaleable</span> platform — grow without <span class="mistake" data-correct="changing">to change</span> your infrastructure</li>
+        <li>Transparent pricing with no <span class="mistake" data-correct="hidden">hide</span> fees</li>
+        <li>Trusted by over 300 enterprises <span class="mistake" data-correct="across">in</span> 14 industries</li>
+      </ul>
+    </div>
+    <div class="controls">
+      <button class="btn btn-hint" onclick="showLocations('b2')">Show Locations</button>
+      <button class="btn btn-reveal" onclick="revealAll('b2')">Reveal All</button>
+      <button class="btn btn-reset" onclick="resetParagraph('b2')">Reset</button>
+    </div>
+  </div>
+
+  <!-- ─── 3. Project Status Report ─── -->
+  <div class="para-card" id="p-b3">
+    <div class="para-header">
+      <div><span class="para-num">3.</span><span class="para-label">Project Status Report</span></div>
+      <span class="counter" id="ctr-b3">0 / 7 revealed</span>
+    </div>
+    <div class="para-text">
+      <strong>Project:</strong> Meridian CRM Integration — Week 14 Update<br><br>
+      The development team has <span class="mistake" data-correct="completed">completes</span> the API authentication module ahead <span class="mistake" data-correct="of">from</span> schedule. Testing is currently <span class="mistake" data-correct="underway">under way</span> for the data migration layer, which has <span class="mistake" data-correct="proven">proved to be</span> more complex than originally <span class="mistake" data-correct="anticipated">anticipating</span>. We expect to <span class="mistake" data-correct="finish">finishing</span> this phase by end of next week. The main <span class="mistake" data-correct="risk">risky</span> at this stage is the third-party vendor's delayed delivery of sandbox credentials, which may affect our testing timeline. The project remains on budget.
+    </div>
+    <div class="controls">
+      <button class="btn btn-hint" onclick="showLocations('b3')">Show Locations</button>
+      <button class="btn btn-reveal" onclick="revealAll('b3')">Reveal All</button>
+      <button class="btn btn-reset" onclick="resetParagraph('b3')">Reset</button>
+    </div>
+  </div>
+
+</div><!-- end .level-panel -->
+
+<script>
+function getMistakes(paraId) {
+  return document.querySelectorAll('#p-' + paraId + ' span.mistake');
+}
+
+function getRevealed(paraId) {
+  return document.querySelectorAll('#p-' + paraId + ' span.mistake.revealed').length;
+}
+
+function updateCounter(paraId) {
+  var ctr = document.getElementById('ctr-' + paraId);
+  var revealed = getRevealed(paraId);
+  var total = getMistakes(paraId).length;
+  ctr.textContent = revealed + ' / ' + total + ' revealed';
+  ctr.classList.toggle('complete', revealed === total);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function revealMistake(span) {
+  if (span.classList.contains('revealed')) return;
+  span.classList.add('revealed');
+  span.classList.remove('hinted');
+
+  var wrong = span.textContent;
+  var correct = span.dataset.correct;
+
+  var html = '<del class="wrong-text">' + escHtml(wrong) + '</del>';
+  if (correct && correct.trim() !== '') {
+    html += ' <span class="correct-text">' + escHtml(correct) + '</span>';
+  } else {
+    html += '<span class="deletion-label"> \u2715 delete</span>';
+  }
+  span.innerHTML = html;
+  span.removeAttribute('onclick');
+
+  var card = span.closest('.para-card');
+  var paraId = card.id.replace('p-', '');
+  updateCounter(paraId);
+}
+
+function showLocations(paraId) {
+  getMistakes(paraId).forEach(function(span) {
+    if (!span.classList.contains('revealed')) {
+      span.classList.toggle('hinted');
+    }
+  });
+}
+
+function revealAll(paraId) {
+  getMistakes(paraId).forEach(function(span) {
+    if (!span.classList.contains('revealed')) {
+      revealMistake(span);
+    }
+  });
+}
+
+function resetParagraph(paraId) {
+  getMistakes(paraId).forEach(function(span) {
+    if (span.classList.contains('revealed')) {
+      var wrong = span.querySelector('del.wrong-text');
+      if (wrong) { span.textContent = wrong.textContent; }
+      span.classList.remove('revealed', 'hinted');
+      span.setAttribute('onclick', 'revealMistake(this)');
+    } else {
+      span.classList.remove('hinted');
+    }
+  });
+  updateCounter(paraId);
+}
+
+// Attach onclick to all mistake spans on load
+document.querySelectorAll('span.mistake').forEach(function(span) {
+  span.setAttribute('onclick', 'revealMistake(this)');
+});
+
+// Initialize counters + inject Copy buttons
+document.querySelectorAll('.para-card').forEach(function(card) {
+  var paraId = card.id.replace('p-', '');
+  var total = getMistakes(paraId).length;
+  document.getElementById('ctr-' + paraId).textContent = '0 / ' + total + ' revealed';
+
+  var btn = document.createElement('button');
+  btn.className = 'btn btn-copy';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', function() { copyParagraph(paraId, btn); });
+  card.querySelector('.controls').appendChild(btn);
+});
+
+async function copyParagraph(paraId, btn) {
+  var paraDiv = document.querySelector('#p-' + paraId + ' .para-text') ||
+                document.querySelector('#p-' + paraId + ' .para-slide') ||
+                document.querySelector('#p-' + paraId + ' .para-email');
+
+  function nodeToHTML(node) {
+    if (node.nodeType === 3) {
+      return node.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    if (node.nodeType !== 1) return '';
+    var tag = node.tagName.toLowerCase();
+    if (tag === 'span' && node.classList.contains('mistake')) {
+      if (node.classList.contains('revealed')) {
+        var del = node.querySelector('del.wrong-text');
+        var ins = node.querySelector('span.correct-text');
+        var out = '';
+        if (del) out += '<span style="color:#B03030;text-decoration:line-through;">' + del.textContent.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>';
+        if (ins && ins.textContent.trim()) out += ' <span style="color:#1a6b1a;font-weight:600;">' + ins.textContent.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>';
+        return out;
+      } else {
+        return node.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+    }
+    var inner = '';
+    node.childNodes.forEach(function(c) { inner += nodeToHTML(c); });
+    return inner;
+  }
+
+  var inner = '';
+  paraDiv.childNodes.forEach(function(n) { inner += nodeToHTML(n); });
+  var htmlStr = '<meta charset="utf-8"><p style="font-family:Georgia,serif;font-size:12pt;line-height:1.9;color:#111;">' + inner + '</p>';
+  var plainStr = paraDiv.innerText;
+
+  try {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([htmlStr], { type: 'text/html' }),
+        'text/plain': new Blob([plainStr], { type: 'text/plain' })
+      })
+    ]);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  } catch(e) {
+    navigator.clipboard.writeText(plainStr).then(function() {
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 1800);
+    });
+  }
+}
+</script>
+</body>
+</html>

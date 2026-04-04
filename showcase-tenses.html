@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business English Tenses — P-City English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF8F2;
+    --ink:     #111111;
+    --muted:   #888888;
+    --gold:    #C9A84C;
+    --rule:    #D6C9A8;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Lora', Georgia, serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+  }
+
+  /* ─── Back link ─── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 2rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--gold); }
+
+  /* ─── Header ─── */
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-header .logo {
+    width: 180px;
+    max-width: 60%;
+    margin-bottom: 1.8rem;
+    opacity: 0.95;
+  }
+
+  .header-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.2rem auto;
+  }
+
+  .site-header h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .site-header .subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── Tab bar ─── */
+  .tense-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.6rem 1.5rem;
+  }
+
+  .tense-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .tense-btn {
+    flex-shrink: 0;
+    padding: 0.28rem 0.7rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .tense-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .tense-btn.active { background: var(--gold); border-color: var(--gold); color: var(--cream); }
+
+  /* ─── Sections ─── */
+  .tense-section { display: none; }
+  .tense-section.visible { display: block; }
+
+  .tense-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem 0;
+  }
+
+  .tense-intro h2 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .tense-intro .tense-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .tense-intro .tense-note {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.4rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+
+  /* ─── Topic block ─── */
+  .topic {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 3rem 3rem;
+  }
+
+  .topic-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .topic h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-rule {
+    margin-bottom: 1.2rem;
+  }
+  .topic-rule::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .questions {
+    list-style: none;
+    counter-reset: q;
+    padding: 0;
+    margin-bottom: 1.8rem;
+  }
+
+  .questions li {
+    counter-increment: q;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .questions li:last-child { border-bottom: none; }
+  .questions li::before {
+    content: counter(q);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--gold);
+    min-width: 1.2rem;
+    padding-top: 0.2rem;
+    font-weight: 600;
+  }
+
+  /* ─── Notes ─── */
+  .notes-area { position: relative; }
+
+  .notes-label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .notes-box {
+    width: 100%;
+    min-height: 100px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.15s;
+    line-height: 1.75;
+  }
+  .notes-box:focus { border-color: var(--gold); }
+
+  .copy-btn {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.2rem 0.55rem;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .copy-btn.copied { color: #1a6b1a; border-color: #1a6b1a; }
+
+  .page-end { height: 5rem; }
+
+  @media (max-width: 640px) {
+    .tense-intro { padding: 2rem 1.5rem 0; }
+    .topic { padding: 1.5rem 1.5rem 2.5rem; }
+    .site-header { padding: 1.5rem 1rem 1.5rem; }
+  }
+
+  /* ─── Print ─── */
+  @media print {
+    body { background: #fff; }
+    .back-link, .tense-nav-wrap { display: none; }
+    .tense-section { display: block !important; }
+    .copy-btn { display: none; }
+    .topic-eyebrow, .tense-intro .tense-label, .questions li::before { color: #B8924A; }
+  }
+
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; Back to Home</a>
+
+<header class="site-header">
+  <img class="logo" src="PCityEnglish_logonobg.png" alt="P-City English">
+  <div class="header-rule"></div>
+  <h1>Business English Tenses</h1>
+  <p class="subtitle">Grammar in Business Contexts</p>
+</header>
+
+<!-- ─── Tab bar ─── -->
+<div class="tense-nav-wrap">
+  <nav class="tense-nav" role="tablist">
+    <button class="tense-btn active"  onclick="showTense('present-simple', this)"             role="tab">Present Simple</button>
+    <button class="tense-btn"         onclick="showTense('present-continuous', this)"          role="tab">Present Continuous</button>
+    <button class="tense-btn"         onclick="showTense('present-perfect', this)"             role="tab">Present Perfect</button>
+    <button class="tense-btn"         onclick="showTense('present-perfect-continuous', this)"  role="tab">Present Perfect Continuous</button>
+    <button class="tense-btn"         onclick="showTense('past-simple', this)"                 role="tab">Past Simple</button>
+    <button class="tense-btn"         onclick="showTense('past-continuous', this)"             role="tab">Past Continuous</button>
+    <button class="tense-btn"         onclick="showTense('past-perfect', this)"                role="tab">Past Perfect</button>
+    <button class="tense-btn"         onclick="showTense('past-perfect-continuous', this)"     role="tab">Past Perfect Continuous</button>
+    <button class="tense-btn"         onclick="showTense('future-will', this)"                 role="tab">Future — will</button>
+    <button class="tense-btn"         onclick="showTense('future-going-to', this)"             role="tab">Future — going to</button>
+    <button class="tense-btn"         onclick="showTense('future-continuous', this)"           role="tab">Future Continuous</button>
+    <button class="tense-btn"         onclick="showTense('future-perfect', this)"              role="tab">Future Perfect</button>
+    <button class="tense-btn"         onclick="showTense('future-perfect-continuous', this)"   role="tab">Future Perfect Continuous</button>
+  </nav>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PRESENT SIMPLE
+════════════════════════════════════════════════════════ -->
+<section class="tense-section visible" id="present-simple">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Present Simple</h2>
+    <p class="tense-note">Use for facts, routines, policies, and states that are generally true. &nbsp;The company operates in 14 markets. &nbsp;She reports directly to the CEO. &nbsp;We don't charge setup fees.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Company Policies &amp; Rules</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What does your company's expense policy say about travel reimbursement?</span></li>
+      <li><span>How does your organization handle remote work — does it have a formal policy?</span></li>
+      <li><span>What rules does your team follow when approving new vendors or external partners?</span></li>
+      <li><span>Does your company require employees to sign a non-disclosure agreement? What does it cover?</span></li>
+      <li><span>What happens when someone violates a company policy in your organization?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PRESENT CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="present-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Present Continuous</h2>
+    <p class="tense-note">Use for actions happening right now or around this time, and for temporary or changing situations. &nbsp;We're currently negotiating with three vendors. &nbsp;The market is shifting fast.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Current Projects &amp; Initiatives</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What project are you currently working on, and what phase is it in?</span></li>
+      <li><span>What's the most challenging thing your team is dealing with right now?</span></li>
+      <li><span>Is your company currently hiring? What roles are you trying to fill?</span></li>
+      <li><span>What new tools or processes is your team experimenting with at the moment?</span></li>
+      <li><span>Are you currently pursuing any new markets or customer segments? What's the plan?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PRESENT PERFECT
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="present-perfect">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Present Perfect</h2>
+    <p class="tense-note">Use for past experiences or actions with a connection to the present — completed events, achievements, and recent decisions. &nbsp;We've signed three new clients. &nbsp;I've worked in this industry for ten years.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Career Achievements &amp; Experience</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What's the biggest professional achievement you've accomplished so far in your career?</span></li>
+      <li><span>How many companies have you worked for, and what have you learned from each?</span></li>
+      <li><span>Have you ever managed a team? What has that experience taught you?</span></li>
+      <li><span>What's the most complex project you've led, and what made it challenging?</span></li>
+      <li><span>Have you ever had to turn around a failing project? How did you approach it?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PRESENT PERFECT CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="present-perfect-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Present Perfect Continuous</h2>
+    <p class="tense-note">Use for ongoing activities that started in the past and continue now — emphasizing duration or recent sustained effort. &nbsp;We've been working on this for six months. &nbsp;I've been leading the negotiations all week.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Ongoing Projects</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>How long have you been working on your current project, and what stage is it at?</span></li>
+      <li><span>What has your team been focusing on for the past few sprints?</span></li>
+      <li><span>How long have you been dealing with a particular challenge at work, and what have you tried so far?</span></li>
+      <li><span>Have you been working with any new tools recently? How have they been performing?</span></li>
+      <li><span>What process has your team been trying to improve, and what progress have you made?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAST SIMPLE
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="past-simple">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Past Simple</h2>
+    <p class="tense-note">Use for completed actions at a specific point in the past. &nbsp;We launched the product in Q3. &nbsp;I worked at that company for three years. &nbsp;The deal closed last Friday.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Past Projects &amp; Campaigns</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What was the most successful project you delivered in your previous role?</span></li>
+      <li><span>Describe a campaign or initiative your company ran that produced unexpected results.</span></li>
+      <li><span>What was the biggest obstacle you faced during a past project, and how did you overcome it?</span></li>
+      <li><span>When did your company last rebrand or significantly change its product offering? What triggered it?</span></li>
+      <li><span>Tell me about a time your team missed a deadline. What happened and what did you change afterward?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAST CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="past-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Past Continuous</h2>
+    <p class="tense-note">Use for actions in progress at a specific past time, background context for events, or parallel activities. &nbsp;We were finalizing the deal when the market crashed. &nbsp;While one team was testing, another was building.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Background Context for Events</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What was your team working on when the company announced a major change or restructuring?</span></li>
+      <li><span>Describe the state of your project when an unexpected problem surfaced.</span></li>
+      <li><span>What were the market conditions like when your company launched its most important product?</span></li>
+      <li><span>What was happening in the industry when your company made its most significant strategic decision?</span></li>
+      <li><span>What was your team dealing with when the most important client called with a complaint?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAST PERFECT
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="past-perfect">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Past Perfect</h2>
+    <p class="tense-note">Use for an action completed before another point in the past. &nbsp;By the time we closed the deal, we had already spent three months on due diligence. &nbsp;She had never managed a team before she took the role.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Before a Key Business Event</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What preparations had your team made before the most important product launch you've been involved in?</span></li>
+      <li><span>By the time the client signed the contract, how long had you been working on the pitch?</span></li>
+      <li><span>What groundwork had been laid before your company entered a new market?</span></li>
+      <li><span>Had your company ever tried a similar approach before the strategy that ultimately succeeded?</span></li>
+      <li><span>By the time the merger was announced, what decisions had already been made behind the scenes?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAST PERFECT CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="past-perfect-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Past Perfect Continuous</h2>
+    <p class="tense-note">Use for an ongoing activity that was in progress before a specific past moment — emphasizing duration up to a past point. &nbsp;By the time we landed the deal, we had been pitching to them for six months.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Long-Term Efforts That Led to a Result</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>How long had you been working toward a particular goal before you finally achieved it?</span></li>
+      <li><span>By the time you closed a key deal, how long had you been building the relationship with that client?</span></li>
+      <li><span>How long had the company been losing money before it finally turned profitable?</span></li>
+      <li><span>By the time the product was ready to launch, how long had the team been developing it?</span></li>
+      <li><span>How long had the management team been discussing a change before they finally implemented it?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FUTURE — WILL
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="future-will">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Future — will</h2>
+    <p class="tense-note">Use for predictions, spontaneous decisions, promises, and facts about the future. &nbsp;The market will probably consolidate further. &nbsp;I'll get back to you by Friday. &nbsp;This change will affect all departments.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Industry Predictions</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What do you think will be the biggest disruptor in your industry in the next five years?</span></li>
+      <li><span>Do you think AI will replace a significant number of jobs in your field, or will it mostly augment them?</span></li>
+      <li><span>How do you think customer expectations will change over the next decade?</span></li>
+      <li><span>Will remote work remain the norm in your industry, or will companies pull people back to the office?</span></li>
+      <li><span>Which emerging market do you think will create the most opportunities for companies in your sector?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FUTURE — GOING TO
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="future-going-to">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Future — going to</h2>
+    <p class="tense-note">Use for plans and intentions already decided, and for predictions based on current evidence. &nbsp;We're going to expand into DACH next year. &nbsp;Looking at the numbers, this is going to be a strong Q3.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Business Plans &amp; Roadmaps</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>What is your company going to focus on for the rest of this year?</span></li>
+      <li><span>Is your team going to change its process or approach in the next sprint or quarter? How?</span></li>
+      <li><span>Are you going to hire for any new roles in the near future? What's driving that decision?</span></li>
+      <li><span>What product features is your team going to prioritize next, and why?</span></li>
+      <li><span>Is your company going to raise funding, seek partnerships, or grow organically in the next year?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FUTURE CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="future-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Future Continuous</h2>
+    <p class="tense-note">Use for actions that will be in progress at a specific point in the future, or for planned/expected ongoing situations. &nbsp;This time next year, we'll be operating in five countries. &nbsp;By Thursday, the team will be testing the new build.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>What You'll Be Doing at a Future Point</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>This time next year, what will you be working on if everything goes according to plan?</span></li>
+      <li><span>What role will you be playing in your organization in five years?</span></li>
+      <li><span>By the end of this quarter, what will your team be focused on?</span></li>
+      <li><span>At the next company all-hands, what progress will you be reporting?</span></li>
+      <li><span>When the next product iteration launches, what will the engineering team be building next?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FUTURE PERFECT
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="future-perfect">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Future Perfect</h2>
+    <p class="tense-note">Use for actions that will be completed before a specific future point. &nbsp;By the end of Q3, we will have launched three new features. &nbsp;By this time next year, she will have been with the company for a decade.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Project Completion Deadlines</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>By the end of this quarter, what will your team have delivered?</span></li>
+      <li><span>By the time the client's contract renews, will you have met all the KPIs you committed to?</span></li>
+      <li><span>By the end of the year, how many features will your team have shipped?</span></li>
+      <li><span>Will you have completed your current project by the original deadline, or do you need to adjust expectations?</span></li>
+      <li><span>By the next board meeting, what milestones will the company have achieved?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FUTURE PERFECT CONTINUOUS
+════════════════════════════════════════════════════════ -->
+<section class="tense-section" id="future-perfect-continuous">
+  <div class="tense-intro">
+    <p class="tense-label">Tense</p>
+    <h2>Future Perfect Continuous</h2>
+    <p class="tense-note">Use for ongoing actions that will still be in progress up to (and possibly beyond) a specific future point — emphasizing duration. &nbsp;By next March, we will have been running this campaign for a full year.</p>
+  </div>
+  <div class="topic">
+    <p class="topic-eyebrow">Topic 01</p>
+    <h3>Long-Running Projects &amp; Timelines</h3>
+    <div class="topic-rule"></div>
+    <ol class="questions">
+      <li><span>By the time your current project is delivered, how long will you have been working on it?</span></li>
+      <li><span>By the end of this year, how long will your team have been using your current project management tool?</span></li>
+      <li><span>By the time the product reaches its 1.0 release, how long will the development team have been building it?</span></li>
+      <li><span>By the time the campaign concludes, how long will the marketing team have been running it?</span></li>
+      <li><span>How long will you have been working toward your current career goal by the time you achieve it?</span></li>
+    </ol>
+    <div class="notes-area">
+      <span class="notes-label">Notes</span>
+      <textarea class="notes-box" placeholder="Write your notes here…"></textarea>
+      <button class="copy-btn">Copy</button>
+    </div>
+  </div>
+</section>
+
+
+<div class="page-end"></div>
+
+<script>
+  function showTense(id, btn) {
+    document.querySelectorAll('.tense-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.tense-btn').forEach(function(b) { b.classList.remove('active'); });
+    var target = document.getElementById(id);
+    if (target) target.classList.add('visible');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('copy-btn')) return;
+    var btn = e.target;
+    var textarea = btn.closest('.notes-area').querySelector('.notes-box');
+    navigator.clipboard.writeText(textarea.value).then(function() {
+      btn.textContent = 'Copied \u2713';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+</script>
+
+</body>
+</html>
