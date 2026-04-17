@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Quiz — Founder of an AI-based Startup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --cream: #FAF8F2;
+  --ink: #111111;
+  --gold: #C9A84C;
+  --rule: #D6C9A8;
+  --muted: #888888;
+  --red: #B03030;
+  --green: #1a6b1a;
+  --bg-correct: #eaf5ea;
+  --bg-wrong: #faeaea;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.85;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 3rem 2rem 2.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.site-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.site-header .tagline {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+.header-rule {
+  width: 48px; height: 2px;
+  background: var(--gold);
+  margin: 0 auto;
+}
+
+/* ── SCORE BAR ── */
+.score-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.7rem 2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.score-bar strong { color: var(--ink); font-size: 1rem; letter-spacing: 0; text-transform: none; }
+
+/* ── LAYOUT ── */
+.quiz-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── SECTION HEADER ── */
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2.5rem 0 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── QUESTION CARD ── */
+.q-card {
+  margin-bottom: 1.6rem;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.q-card.answered-correct { border-color: var(--green); background: var(--bg-correct); }
+.q-card.answered-wrong   { border-color: var(--red);   background: var(--bg-wrong); }
+
+.q-number {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.q-text {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+.q-text em { font-style: italic; color: #444; }
+
+/* ── OPTIONS ── */
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+.opt-btn {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  text-align: left;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.opt-btn:hover:not(:disabled) { background: #f0ece0; border-color: #bbb; }
+.opt-btn.correct  { background: #d4edda; border-color: var(--green); color: var(--green); font-weight: 600; }
+.opt-btn.wrong    { background: #f8d7da; border-color: var(--red);   color: var(--red); }
+.opt-btn:disabled { cursor: default; }
+
+/* ── FEEDBACK ── */
+.q-feedback {
+  margin-top: 0.85rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-style: italic;
+  display: none;
+}
+.q-card.answered-correct .q-feedback,
+.q-card.answered-wrong   .q-feedback { display: block; }
+
+/* ── FINAL SCORE ── */
+#final-score {
+  display: none;
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #fff;
+}
+#final-score h2 { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 0.5rem; }
+#final-score .score-big { font-size: 2.8rem; font-weight: 700; color: var(--gold); display: block; margin: 0.5rem 0; }
+#final-score p { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Grammar Quiz</h1>
+  <p class="tagline">Founder of an AI-based Startup &nbsp;·&nbsp; P. City English</p>
+  <div class="header-rule"></div>
+</header>
+
+<div class="score-bar">
+  <span>Score &nbsp;<strong id="score-correct">0</strong> / <strong id="score-total">0</strong></span>
+  <span>Remaining &nbsp;<strong id="score-remaining">24</strong></span>
+</div>
+
+<div class="quiz-wrap">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1 — ARTICLES
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 1 &nbsp;/&nbsp; Articles (a / an / the / no article)</p>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <p class="q-number">Question 1</p>
+    <p class="q-text">Choose the correct sentence.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q1', this, false)">I went to pretty similar restaurant last week.</button>
+      <button class="opt-btn" onclick="answer('q1', this, true)">I went to a pretty similar restaurant last week.</button>
+      <button class="opt-btn" onclick="answer('q1', this, false)">I went to the pretty similar restaurant last week.</button>
+    </div>
+    <p class="q-feedback">Use the indefinite article <strong>a</strong> before a singular countable noun mentioned for the first time. "Restaurant" is countable and non-specific here.</p>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <p class="q-number">Question 2</p>
+    <p class="q-text">Which is correct?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q2', this, false)">I will wear jacket tomorrow.</button>
+      <button class="opt-btn" onclick="answer('q2', this, true)">I will wear a jacket tomorrow.</button>
+      <button class="opt-btn" onclick="answer('q2', this, false)">I will wear the jacket tomorrow.</button>
+    </div>
+    <p class="q-feedback">Singular countable nouns need an article. "Jacket" with no context → <strong>a jacket</strong>. (Use "the jacket" only if the listener already knows which one.)</p>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <p class="q-number">Question 3</p>
+    <p class="q-text">Fill in the blank. Choose the correct option.<br><em>"It's _____ total mess in here."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q3', this, false)">the</button>
+      <button class="opt-btn" onclick="answer('q3', this, true)">a</button>
+      <button class="opt-btn" onclick="answer('q3', this, false)">(no article)</button>
+    </div>
+    <p class="q-feedback">"Total mess" is a singular countable expression here → <strong>a total mess</strong>. "The" would imply a specific mess the listener already knows about.</p>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <p class="q-number">Question 4</p>
+    <p class="q-text">Choose the correct sentence.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q4', this, false)">For last few years, business has been good.</button>
+      <button class="opt-btn" onclick="answer('q4', this, true)">For the last few years, business has been good.</button>
+      <button class="opt-btn" onclick="answer('q4', this, false)">For a last few years, business has been good.</button>
+    </div>
+    <p class="q-feedback">"The last few years" is a specific, defined period — it refers to the years immediately before now. It always takes <strong>the</strong>.</p>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <p class="q-number">Question 5</p>
+    <p class="q-text">Which sentence is correct?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q5', this, false)">Today we had discussion about the project.</button>
+      <button class="opt-btn" onclick="answer('q5', this, true)">Today we had a discussion about the project.</button>
+      <button class="opt-btn" onclick="answer('q5', this, false)">Today we had the discussion about the project.</button>
+    </div>
+    <p class="q-feedback">"Discussion" is a countable noun. Without a specific reference already established, use <strong>a discussion</strong>.</p>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <p class="q-number">Question 6</p>
+    <p class="q-text">Fill in the blank.<br><em>"When it comes to _____ current market situation, we need to be careful."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q6', this, true)">the</button>
+      <button class="opt-btn" onclick="answer('q6', this, false)">a</button>
+      <button class="opt-btn" onclick="answer('q6', this, false)">(no article)</button>
+    </div>
+    <p class="q-feedback">"The current market situation" refers to one specific, shared context both speakers understand → <strong>the</strong>. This is a very common omission in Polish-speaker English.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2 — FEWER / LESS / MANY / MUCH
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 2 &nbsp;/&nbsp; Fewer / Less / Many / Much</p>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <p class="q-number">Question 7</p>
+    <p class="q-text">Choose the correct word.<br><em>"There were _____ kids at the event than expected."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q7', this, true)">fewer</button>
+      <button class="opt-btn" onclick="answer('q7', this, false)">less</button>
+    </div>
+    <p class="q-feedback"><strong>Fewer</strong> is used with countable nouns (kids, people, cars). <strong>Less</strong> is for uncountable nouns (time, money, water).</p>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <p class="q-number">Question 8</p>
+    <p class="q-text">Choose the correct word.<br><em>"The new subway lines will serve _____ passengers than expected in the first year."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q8', this, true)">fewer</button>
+      <button class="opt-btn" onclick="answer('q8', this, false)">less</button>
+    </div>
+    <p class="q-feedback">"Passengers" is countable → <strong>fewer passengers</strong>. "Less" is only for uncountable quantities.</p>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <p class="q-number">Question 9</p>
+    <p class="q-text">Choose the correct option.<br><em>"There were _____ concerns from residents about the noise."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q9', this, false)">much</button>
+      <button class="opt-btn" onclick="answer('q9', this, true)">many</button>
+    </div>
+    <p class="q-feedback">"Concerns" is a countable plural noun → <strong>many concerns</strong>. Use "much" only with uncountable nouns (e.g. "much confusion").</p>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <p class="q-number">Question 10</p>
+    <p class="q-text">Find the mistake and choose the correct version.<br><em>"He's had too much fails in his career."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q10', this, false)">He's had too many fails in his career.</button>
+      <button class="opt-btn" onclick="answer('q10', this, true)">He's had too many failures in his career.</button>
+      <button class="opt-btn" onclick="answer('q10', this, false)">He's had too much failure in his career.</button>
+    </div>
+    <p class="q-feedback">Two errors: <strong>much → many</strong> (countable) and <strong>fails → failures</strong>. "Fail" is a verb; the noun form is "failure." Both B and C fix one issue — only B fixes both.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 — EMBEDDED QUESTIONS
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 3 &nbsp;/&nbsp; Embedded Questions (Word Order)</p>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <p class="q-number">Question 11</p>
+    <p class="q-text">Choose the correct embedded question.<br><em>"The app lets you select _____ ."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q11', this, false)">how do you watch the game</button>
+      <button class="opt-btn" onclick="answer('q11', this, true)">how you watch the game</button>
+      <button class="opt-btn" onclick="answer('q11', this, false)">how you do watch the game</button>
+    </div>
+    <p class="q-feedback">In embedded (indirect) questions, use statement word order — no inversion. ✓ <strong>how you watch</strong> (not "how do you watch").</p>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <p class="q-number">Question 12</p>
+    <p class="q-text">Which sentence is grammatically correct?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q12', this, false)">I don't know how solid are the accusations.</button>
+      <button class="opt-btn" onclick="answer('q12', this, true)">I don't know how solid the accusations are.</button>
+      <button class="opt-btn" onclick="answer('q12', this, false)">I don't know how are the accusations solid.</button>
+    </div>
+    <p class="q-feedback">After "I don't know," use statement order (subject before verb): <strong>how solid the accusations are</strong> — not the inverted question form.</p>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <p class="q-number">Question 13</p>
+    <p class="q-text">Choose the correct sentence.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q13', this, false)">They know what is their problem.</button>
+      <button class="opt-btn" onclick="answer('q13', this, true)">They know what their problem is.</button>
+      <button class="opt-btn" onclick="answer('q13', this, false)">They know what problem is their.</button>
+    </div>
+    <p class="q-feedback">After a reporting verb like "know," the embedded question uses statement word order: <strong>what their problem is</strong>.</p>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <p class="q-number">Question 14</p>
+    <p class="q-text">A colleague asks: <em>"Can you tell me what problem you are solving?"</em><br>Which version of this question is a direct (non-embedded) question?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q14', this, true)">What problem are you solving?</button>
+      <button class="opt-btn" onclick="answer('q14', this, false)">What problem you are solving?</button>
+      <button class="opt-btn" onclick="answer('q14', this, false)">What are you solving problem?</button>
+    </div>
+    <p class="q-feedback">Direct questions use inverted order (auxiliary before subject): <strong>What problem are you solving?</strong> The embedded version drops the inversion: "Can you tell me what problem you are solving?"</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 — PREPOSITIONS
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 4 &nbsp;/&nbsp; Prepositions</p>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <p class="q-number">Question 15</p>
+    <p class="q-text">Choose the correct preposition.<br><em>"I was _____ my cousin's wedding last weekend."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q15', this, false)">on</button>
+      <button class="opt-btn" onclick="answer('q15', this, true)">at</button>
+      <button class="opt-btn" onclick="answer('q15', this, false)">in</button>
+    </div>
+    <p class="q-feedback">Use <strong>at</strong> for events and locations (at a wedding, at a conference, at a party). "On" is for surfaces, days, and media. "In" is for enclosed spaces.</p>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <p class="q-number">Question 16</p>
+    <p class="q-text">Choose the correct preposition.<br><em>"The whole sales team is _____ a trade show this week."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q16', this, false)">on</button>
+      <button class="opt-btn" onclick="answer('q16', this, true)">at</button>
+      <button class="opt-btn" onclick="answer('q16', this, false)">in</button>
+    </div>
+    <p class="q-feedback">Trade shows, conferences, and events use <strong>at</strong>. ("On" a trade show is a common Polish-speaker error — think of "na targach" → but in English it's always "at.")</p>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <p class="q-number">Question 17</p>
+    <p class="q-text">Choose the correct preposition.<br><em>"_____ my opinion, we should pivot to a B2B model."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q17', this, false)">On</button>
+      <button class="opt-btn" onclick="answer('q17', this, true)">In</button>
+      <button class="opt-btn" onclick="answer('q17', this, false)">At</button>
+    </div>
+    <p class="q-feedback">The fixed phrase is <strong>in my opinion</strong> — never "on my opinion." (Compare: Polish "moim zdaniem" can feel like "on," but English always uses "in.")</p>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <p class="q-number">Question 18</p>
+    <p class="q-text">Choose the correct preposition.<br><em>"He studied _____ Harvard for two years."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q18', this, false)">on</button>
+      <button class="opt-btn" onclick="answer('q18', this, true)">at</button>
+      <button class="opt-btn" onclick="answer('q18', this, false)">in</button>
+    </div>
+    <p class="q-feedback">Institutions (universities, schools, companies) take <strong>at</strong>: at Harvard, at Google, at the university. "In" is used for cities/countries.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5 — WORTH + -ING
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 5 &nbsp;/&nbsp; "Worth" + -ing</p>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <p class="q-number">Question 19</p>
+    <p class="q-text">Choose the correct form.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q19', this, false)">It's worth to try to convince him.</button>
+      <button class="opt-btn" onclick="answer('q19', this, true)">It's worth trying to convince him.</button>
+      <button class="opt-btn" onclick="answer('q19', this, false)">It's worth to trying to convince him.</button>
+    </div>
+    <p class="q-feedback">"Worth" is always followed by a gerund (-ing form): <strong>worth trying</strong>, worth doing, worth keeping. Never use "to + infinitive" after "worth."</p>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <p class="q-number">Question 20</p>
+    <p class="q-text">Which sentence is correct?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q20', this, false)">It's worth to keep the lessons short.</button>
+      <button class="opt-btn" onclick="answer('q20', this, true)">It's worth keeping the lessons short.</button>
+      <button class="opt-btn" onclick="answer('q20', this, false)">It's worth to kept the lessons short.</button>
+    </div>
+    <p class="q-feedback">"Worth" + gerund: <strong>worth keeping</strong>. You can also say "it's worth it to keep…" — but "worth to keep" is always wrong.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — MIXED ERRORS
+  ══════════════════════════════════════════════ -->
+  <p class="section-label">Section 6 &nbsp;/&nbsp; Mixed Grammar</p>
+
+  <!-- Q21 -->
+  <div class="q-card" id="q21">
+    <p class="q-number">Question 21</p>
+    <p class="q-text">Choose the correct phrase.<br><em>"_____ I had a really productive meeting."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q21', this, false)">Today morning</button>
+      <button class="opt-btn" onclick="answer('q21', this, true)">This morning</button>
+      <button class="opt-btn" onclick="answer('q21', this, false)">Today in the morning</button>
+    </div>
+    <p class="q-feedback">In English, we say <strong>this morning / this afternoon / this evening / tonight</strong> — never "today morning." "Today" stands alone: "I was busy today."</p>
+  </div>
+
+  <!-- Q22 -->
+  <div class="q-card" id="q22">
+    <p class="q-number">Question 22</p>
+    <p class="q-text">Choose the correct phrase.<br><em>"He built the whole company _____ ."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q22', this, false)">by his own</button>
+      <button class="opt-btn" onclick="answer('q22', this, true)">on his own</button>
+      <button class="opt-btn" onclick="answer('q22', this, false)">by his self</button>
+    </div>
+    <p class="q-feedback">The correct expressions are <strong>on his own</strong> or <strong>by himself</strong>. "By his own" is not a standard English phrase.</p>
+  </div>
+
+  <!-- Q23 -->
+  <div class="q-card" id="q23">
+    <p class="q-number">Question 23</p>
+    <p class="q-text">Which sentence uses "research" correctly?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q23', this, false)">I saw some researches that support this.</button>
+      <button class="opt-btn" onclick="answer('q23', this, false)">I read a research on the topic.</button>
+      <button class="opt-btn" onclick="answer('q23', this, true)">I saw some research that supports this.</button>
+    </div>
+    <p class="q-feedback">"Research" is an uncountable noun in English — it has no plural form. Say <strong>some research</strong>, not "some researches." For individual items: "a study," "several studies."</p>
+  </div>
+
+  <!-- Q24 -->
+  <div class="q-card" id="q24">
+    <p class="q-number">Question 24</p>
+    <p class="q-text">The sentence has a verb tense error. Choose the correct version.<br><em>"I didn't know it exists."</em></p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q24', this, false)">I didn't know it exist.</button>
+      <button class="opt-btn" onclick="answer('q24', this, true)">I didn't know it existed.</button>
+      <button class="opt-btn" onclick="answer('q24', this, false)">I don't know it existed.</button>
+    </div>
+    <p class="q-feedback">When the main verb is past ("didn't know"), the subordinate clause must also be past: <strong>I didn't know it existed</strong>. This is called "sequence of tenses" or "backshift."</p>
+  </div>
+
+  <!-- ── FINAL SCORE ── -->
+  <div id="final-score">
+    <h2>Quiz Complete</h2>
+    <span class="score-big" id="final-fraction"></span>
+    <p id="final-message"></p>
+  </div>
+
+</div><!-- /quiz-wrap -->
+
+<script>
+const total = 24;
+let answered = 0;
+let correct = 0;
+
+function answer(qId, btn, isCorrect) {
+  const card = document.getElementById(qId);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+
+  const opts = card.querySelectorAll('.opt-btn');
+  opts.forEach(b => b.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    card.classList.add('answered-correct');
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    card.classList.add('answered-wrong');
+    opts.forEach(b => {
+      if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+    });
+  }
+
+  answered++;
+  document.getElementById('score-correct').textContent = correct;
+  document.getElementById('score-total').textContent = answered;
+  document.getElementById('score-remaining').textContent = total - answered;
+
+  if (answered === total) showFinal();
+}
+
+function showFinal() {
+  const el = document.getElementById('final-score');
+  el.style.display = 'block';
+  document.getElementById('final-fraction').textContent = correct + ' / ' + total;
+  const pct = Math.round((correct / total) * 100);
+  let msg = '';
+  if (pct >= 90) msg = 'Excellent work — very few recurring errors today.';
+  else if (pct >= 75) msg = 'Good result. Review the questions you missed and keep practising.';
+  else if (pct >= 55) msg = 'Solid effort. Focus on the sections where you lost the most points.';
+  else msg = 'Plenty to work on — but these are exactly the patterns we\'ve been practising. Review each section carefully.';
+  document.getElementById('final-message').textContent = msg + ' (' + pct + '%)';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

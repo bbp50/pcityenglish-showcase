@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Quiz — FP&amp;A Manager at a Global Financial Institute</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --cream: #FAF8F2;
+  --ink: #111111;
+  --gold: #C9A84C;
+  --rule: #D6C9A8;
+  --muted: #888888;
+  --red: #B03030;
+  --green: #1a6b1a;
+  --bg-correct: #eaf5ea;
+  --bg-wrong: #faeaea;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--ink); line-height: 1.85; }
+.site-header { text-align: center; padding: 3rem 2rem 2.25rem; border-bottom: 1px solid var(--rule); }
+.site-header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.3rem; }
+.site-header .tagline { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.4rem; }
+.header-rule { width: 48px; height: 2px; background: var(--gold); margin: 0 auto; }
+.score-bar { position: sticky; top: 0; z-index: 20; background: var(--cream); border-bottom: 1px solid var(--rule); display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 0.7rem 2rem; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+.score-bar strong { color: var(--ink); font-size: 1rem; letter-spacing: 0; text-transform: none; }
+.quiz-wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin: 2.5rem 0 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.q-card { margin-bottom: 1.6rem; padding: 1.4rem 1.6rem; border: 1px solid var(--rule); border-radius: 4px; background: #fff; transition: border-color 0.2s; }
+.q-card.answered-correct { border-color: var(--green); background: var(--bg-correct); }
+.q-card.answered-wrong { border-color: var(--red); background: var(--bg-wrong); }
+.q-number { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+.q-text { font-size: 1.05rem; margin-bottom: 1rem; line-height: 1.75; }
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+.opt-btn { font-family: var(--font-body); font-size: 0.95rem; text-align: left; padding: 0.55rem 1rem; border: 1px solid var(--rule); border-radius: 3px; background: var(--cream); color: var(--ink); cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+.opt-btn:hover:not(:disabled) { background: #f0ece0; border-color: #bbb; }
+.opt-btn.correct { background: #d4edda; border-color: var(--green); color: var(--green); font-weight: 600; }
+.opt-btn.wrong { background: #f8d7da; border-color: var(--red); color: var(--red); }
+.opt-btn:disabled { cursor: default; }
+.q-feedback { margin-top: 0.85rem; font-size: 0.88rem; color: var(--muted); font-style: italic; display: none; }
+.q-card.answered-correct .q-feedback, .q-card.answered-wrong .q-feedback { display: block; }
+#final-score { display: none; text-align: center; margin-top: 3rem; padding: 2rem; border: 1px solid var(--rule); border-radius: 4px; background: #fff; }
+#final-score h2 { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 0.5rem; }
+#final-score .score-big { font-size: 2.8rem; font-weight: 700; color: var(--gold); display: block; margin: 0.5rem 0; }
+#final-score p { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Grammar Quiz</h1>
+  <p class="tagline">FP&amp;A Manager at a Global Financial Institute &nbsp;·&nbsp; P. City English</p>
+  <div class="header-rule"></div>
+</header>
+
+<div class="score-bar">
+  <span>Score &nbsp;<strong id="score-correct">0</strong> / <strong id="score-total">0</strong></span>
+  <span>Remaining &nbsp;<strong id="score-remaining">22</strong></span>
+</div>
+
+<div class="quiz-wrap">
+
+  <p class="section-label">Section 1 &nbsp;/&nbsp; Articles (a / an / the)</p>
+
+  <div class="q-card" id="q1">
+    <p class="q-number">Question 1</p>
+    <p class="q-text">We operate in ___ multinational environment.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q1', this, true)">a</button>
+      <button class="opt-btn" onclick="answer('q1', this, false)">an</button>
+      <button class="opt-btn" onclick="answer('q1', this, false)">the</button>
+    </div>
+    <p class="q-feedback">"Multinational" starts with the consonant sound /m/, so we use "a", not "an". The rule is about sound, not spelling.</p>
+  </div>
+
+  <div class="q-card" id="q2">
+    <p class="q-number">Question 2</p>
+    <p class="q-text">A few years ago, I decided to move to ___.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q2', this, false)">finance area</button>
+      <button class="opt-btn" onclick="answer('q2', this, true)">the finance area</button>
+      <button class="opt-btn" onclick="answer('q2', this, false)">a finance area</button>
+    </div>
+    <p class="q-feedback">Specific, known departments/areas of a company take "the" — the finance area, the sales team, the marketing department.</p>
+  </div>
+
+  <div class="q-card" id="q3">
+    <p class="q-number">Question 3</p>
+    <p class="q-text">After leaving my previous employer, I joined ___.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q3', this, true)">an insurance company</button>
+      <button class="opt-btn" onclick="answer('q3', this, false)">insurance company</button>
+      <button class="opt-btn" onclick="answer('q3', this, false)">the insurance company</button>
+    </div>
+    <p class="q-feedback">Singular countable nouns need an article. First mention + unknown to listener = "an" (vowel sound /ɪ/).</p>
+  </div>
+
+  <div class="q-card" id="q4">
+    <p class="q-number">Question 4</p>
+    <p class="q-text">At work I run ___.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q4', this, false)">small team</button>
+      <button class="opt-btn" onclick="answer('q4', this, false)">the small team</button>
+      <button class="opt-btn" onclick="answer('q4', this, true)">a small team</button>
+    </div>
+    <p class="q-feedback">Singular countable noun, first mention — use "a". Dropping the article is a common habit transferred from Polish.</p>
+  </div>
+
+  <div class="q-card" id="q5">
+    <p class="q-number">Question 5</p>
+    <p class="q-text">Learning this way is ___ experience for me.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q5', this, true)">a totally different</button>
+      <button class="opt-btn" onclick="answer('q5', this, false)">totally different</button>
+      <button class="opt-btn" onclick="answer('q5', this, false)">the totally different</button>
+    </div>
+    <p class="q-feedback">"Experience" here is countable (one specific type of experience), so we need "a". Adjectives don't remove the need for an article.</p>
+  </div>
+
+  <div class="q-card" id="q6">
+    <p class="q-number">Question 6</p>
+    <p class="q-text">I listen to ___ of music styles.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q6', this, false)">variety</button>
+      <button class="opt-btn" onclick="answer('q6', this, false)">the variety</button>
+      <button class="opt-btn" onclick="answer('q6', this, true)">a variety</button>
+    </div>
+    <p class="q-feedback">The fixed expression is "a variety of" — always with "a".</p>
+  </div>
+
+  <div class="q-card" id="q7">
+    <p class="q-number">Question 7</p>
+    <p class="q-text">Next Monday is ___.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q7', this, false)">bank holiday</button>
+      <button class="opt-btn" onclick="answer('q7', this, true)">a bank holiday</button>
+      <button class="opt-btn" onclick="answer('q7', this, false)">the bank holiday</button>
+    </div>
+    <p class="q-feedback">"Bank holiday" is singular countable — needs "a". Polish has no articles, so this is easy to miss.</p>
+  </div>
+
+  <p class="section-label">Section 2 &nbsp;/&nbsp; Present Perfect &amp; Perfect Continuous</p>
+
+  <div class="q-card" id="q8">
+    <p class="q-number">Question 8</p>
+    <p class="q-text">Which sentence is correct?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q8', this, false)">I'm in this job since five years.</button>
+      <button class="opt-btn" onclick="answer('q8', this, false)">I work here since five years.</button>
+      <button class="opt-btn" onclick="answer('q8', this, true)">I've worked here for five years.</button>
+    </div>
+    <p class="q-feedback">An action that started in the past and still continues = present perfect. Use "for" + duration, "since" + starting point.</p>
+  </div>
+
+  <div class="q-card" id="q9">
+    <p class="q-number">Question 9</p>
+    <p class="q-text">___ Spanish for four years now.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q9', this, false)">I'm learning</button>
+      <button class="opt-btn" onclick="answer('q9', this, true)">I've been learning</button>
+      <button class="opt-btn" onclick="answer('q9', this, false)">I learn</button>
+    </div>
+    <p class="q-feedback">An ongoing activity from the past until now = present perfect continuous. Present continuous can't express this duration in English.</p>
+  </div>
+
+  <div class="q-card" id="q10">
+    <p class="q-number">Question 10</p>
+    <p class="q-text">Since university, ___ any grammar classes.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q10', this, false)">I didn't have</button>
+      <button class="opt-btn" onclick="answer('q10', this, true)">I haven't had</button>
+      <button class="opt-btn" onclick="answer('q10', this, false)">I don't have</button>
+    </div>
+    <p class="q-feedback">"Since" + a point in time triggers present perfect — the period connects the past to now.</p>
+  </div>
+
+  <div class="q-card" id="q11">
+    <p class="q-number">Question 11</p>
+    <p class="q-text">Since high school, ___ regularly.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q11', this, false)">I do not practice</button>
+      <button class="opt-btn" onclick="answer('q11', this, true)">I haven't been practicing</button>
+      <button class="opt-btn" onclick="answer('q11', this, false)">I'm not practicing</button>
+    </div>
+    <p class="q-feedback">"Since" + an ongoing (non-)action → present perfect continuous.</p>
+  </div>
+
+  <div class="q-card" id="q12">
+    <p class="q-number">Question 12</p>
+    <p class="q-text">It's been four years ___ English seriously.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q12', this, false)">that I'm studying</button>
+      <button class="opt-btn" onclick="answer('q12', this, true)">that I've been studying</button>
+      <button class="opt-btn" onclick="answer('q12', this, false)">that I study</button>
+    </div>
+    <p class="q-feedback">"It's been [time] that..." requires present perfect continuous — we're describing a duration reaching up to now.</p>
+  </div>
+
+  <div class="q-card" id="q13">
+    <p class="q-number">Question 13</p>
+    <p class="q-text">"Have you ever tried sushi?" — "No, ___."</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q13', this, true)">I haven't</button>
+      <button class="opt-btn" onclick="answer('q13', this, false)">I didn't</button>
+      <button class="opt-btn" onclick="answer('q13', this, false)">I don't</button>
+    </div>
+    <p class="q-feedback">Short answers must match the tense of the question. "Have you...?" → "I have / I haven't".</p>
+  </div>
+
+  <p class="section-label">Section 3 &nbsp;/&nbsp; Prepositions</p>
+
+  <div class="q-card" id="q14">
+    <p class="q-number">Question 14</p>
+    <p class="q-text">Are you aware ___ the new policy?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q14', this, false)">about</button>
+      <button class="opt-btn" onclick="answer('q14', this, true)">of</button>
+      <button class="opt-btn" onclick="answer('q14', this, false)">on</button>
+    </div>
+    <p class="q-feedback">Fixed collocation: "aware OF something". "Aware about" is a common error from Polish speakers.</p>
+  </div>
+
+  <div class="q-card" id="q15">
+    <p class="q-number">Question 15</p>
+    <p class="q-text">What kind of music do you listen ___ on your commute?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q15', this, false)">on</button>
+      <button class="opt-btn" onclick="answer('q15', this, false)">— (no preposition)</button>
+      <button class="opt-btn" onclick="answer('q15', this, true)">to</button>
+    </div>
+    <p class="q-feedback">The verb is always "listen TO something". You can't drop the "to", even though Polish "słuchać" takes a direct object.</p>
+  </div>
+
+  <div class="q-card" id="q16">
+    <p class="q-number">Question 16</p>
+    <p class="q-text">I'm not really familiar ___ that software.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q16', this, false)">to</button>
+      <button class="opt-btn" onclick="answer('q16', this, true)">with</button>
+      <button class="opt-btn" onclick="answer('q16', this, false)">of</button>
+    </div>
+    <p class="q-feedback">Fixed collocation: "familiar WITH something/someone".</p>
+  </div>
+
+  <p class="section-label">Section 4 &nbsp;/&nbsp; Collocations &amp; Word Choice</p>
+
+  <div class="q-card" id="q17">
+    <p class="q-number">Question 17</p>
+    <p class="q-text">After months of thinking, I finally ___ to change jobs.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q17', this, false)">took the decision</button>
+      <button class="opt-btn" onclick="answer('q17', this, true)">made the decision</button>
+      <button class="opt-btn" onclick="answer('q17', this, false)">did the decision</button>
+    </div>
+    <p class="q-feedback">In English we MAKE decisions, not take them. "Take a decision" is a direct translation from Polish/French.</p>
+  </div>
+
+  <div class="q-card" id="q18">
+    <p class="q-number">Question 18</p>
+    <p class="q-text">Don't worry — everyone ___ mistakes sometimes.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q18', this, false)">does</button>
+      <button class="opt-btn" onclick="answer('q18', this, true)">makes</button>
+      <button class="opt-btn" onclick="answer('q18', this, false)">takes</button>
+    </div>
+    <p class="q-feedback">Fixed collocation: MAKE a mistake. "Do a mistake" doesn't exist in English.</p>
+  </div>
+
+  <div class="q-card" id="q19">
+    <p class="q-number">Question 19</p>
+    <p class="q-text">I'm waiting for the ___ of her new book next month.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q19', this, true)">release</button>
+      <button class="opt-btn" onclick="answer('q19', this, false)">premier</button>
+      <button class="opt-btn" onclick="answer('q19', this, false)">premiere</button>
+    </div>
+    <p class="q-feedback">Books are "released". "Premiere" is used for films, plays and performances — not books.</p>
+  </div>
+
+  <div class="q-card" id="q20">
+    <p class="q-number">Question 20</p>
+    <p class="q-text">Sitting at a desk all day is a bit ___ for my back.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q20', this, false)">a pain</button>
+      <button class="opt-btn" onclick="answer('q20', this, true)">painful</button>
+      <button class="opt-btn" onclick="answer('q20', this, false)">pain</button>
+    </div>
+    <p class="q-feedback">After "a bit" we need an adjective: painful. "Pain" is a noun and can't describe the situation directly here.</p>
+  </div>
+
+  <p class="section-label">Section 5 &nbsp;/&nbsp; Word Order &amp; Relative Clauses</p>
+
+  <div class="q-card" id="q21">
+    <p class="q-number">Question 21</p>
+    <p class="q-text">Which sentence has the correct word order?</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q21', this, false)">We visit quite often Italy.</button>
+      <button class="opt-btn" onclick="answer('q21', this, true)">We visit Italy quite often.</button>
+      <button class="opt-btn" onclick="answer('q21', this, false)">We quite often visit Italy.</button>
+    </div>
+    <p class="q-feedback">Adverbs of frequency like "quite often" go at the END — never between the verb and its object.</p>
+  </div>
+
+  <div class="q-card" id="q22">
+    <p class="q-number">Question 22</p>
+    <p class="q-text">This team has everything ___ to succeed.</p>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q22', this, false)">what it needs</button>
+      <button class="opt-btn" onclick="answer('q22', this, true)">that it needs</button>
+      <button class="opt-btn" onclick="answer('q22', this, false)">what needs</button>
+    </div>
+    <p class="q-feedback">After "everything / something / nothing / anything", use "that" (or nothing) — never "what". "What" here is a direct translation of Polish "co".</p>
+  </div>
+
+  <div id="final-score">
+    <h2>Quiz Complete</h2>
+    <span class="score-big" id="final-fraction"></span>
+    <p id="final-message"></p>
+  </div>
+
+</div>
+
+<script>
+var TOTAL = 22;
+var answered = 0;
+var correct = 0;
+
+function answer(qId, btn, isCorrect) {
+  var card = document.getElementById(qId);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  var opts = card.querySelectorAll('.opt-btn');
+  opts.forEach(function(b) { b.disabled = true; });
+  if (isCorrect) {
+    btn.classList.add('correct');
+    card.classList.add('answered-correct');
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    card.classList.add('answered-wrong');
+    opts.forEach(function(b) {
+      if (b.getAttribute('onclick').indexOf('true') !== -1) b.classList.add('correct');
+    });
+  }
+  answered++;
+  document.getElementById('score-correct').textContent = correct;
+  document.getElementById('score-total').textContent = answered;
+  document.getElementById('score-remaining').textContent = TOTAL - answered;
+  if (answered === TOTAL) showFinal();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.options').forEach(function(container) {
+    var items = Array.from(container.children);
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+    }
+    items.forEach(function(item) { container.appendChild(item); });
+  });
+});
+
+function showFinal() {
+  var el = document.getElementById('final-score');
+  el.style.display = 'block';
+  document.getElementById('final-fraction').textContent = correct + ' / ' + TOTAL;
+  var pct = Math.round((correct / TOTAL) * 100);
+  var msg = '';
+  if (pct >= 91) msg = 'Excellent — a very clean result. These patterns are clearly becoming automatic.';
+  else if (pct >= 77) msg = 'Strong performance. Review the sections where you dropped points and notice the pattern.';
+  else if (pct >= 59) msg = 'Good effort. Pay close attention to the feedback explanations — the rules are consistent.';
+  else msg = 'These are patterns from throughout our lessons — go back through each section, read the explanations carefully, and we\'ll work on them together.';
+  document.getElementById('final-message').textContent = msg + ' (' + pct + '%)';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

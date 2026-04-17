@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Quizzes — P-City English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:   #FAF8F2;
+  --ink:     #111111;
+  --muted:   #888888;
+  --gold:    #C9A84C;
+  --rule:    #D6C9A8;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+}
+
+html { font-size: 16px; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ─── Header ─── */
+.site-header {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.site-header .subtitle {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+
+.header-rule {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto;
+}
+
+/* ─── Back link ─── */
+.back-link {
+  display: inline-block;
+  margin: 2rem 2rem 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.back-link:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ─── Methodology section ─── */
+.methodology {
+  max-width: 620px;
+  margin: 3.5rem auto;
+  padding: 0 2rem;
+}
+
+.methodology .section-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.methodology h2 {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+
+.methodology p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.85;
+  margin-bottom: 1.1rem;
+}
+
+.methodology-rule {
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  margin: 2rem 0;
+}
+
+/* ─── Quiz cards ─── */
+.quiz-grid {
+  max-width: 820px;
+  margin: 0 auto 5rem;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .quiz-grid { grid-template-columns: 1fr; }
+  .site-header h1 { font-size: 1.75rem; }
+}
+
+.quiz-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 2rem 2rem 1.6rem;
+  background: var(--cream);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+}
+
+.quiz-card::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 1.1rem;
+  transition: width 0.2s;
+}
+
+.quiz-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201,168,76,0.12);
+  transform: translateY(-1px);
+}
+
+.quiz-card:hover::before { width: 44px; }
+
+.quiz-card-role {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.55rem;
+}
+
+.quiz-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.quiz-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.topic-tag {
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.2rem 0.55rem;
+  white-space: nowrap;
+}
+
+.quiz-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+
+.card-arrow {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.5rem 3rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rule);
+}
+
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">&larr; All Materials</a>
+
+<header class="site-header">
+  <h1>Student Grammar Quizzes</h1>
+  <p class="subtitle">Personalized Practice &nbsp;·&nbsp; P. City English</p>
+  <div class="header-rule"></div>
+</header>
+
+<div class="methodology">
+  <p class="section-eyebrow">How these quizzes are built</p>
+  <h2>From real mistakes to targeted practice</h2>
+  <div class="methodology-rule"></div>
+  <p>Between lessons, I keep a running log of each student's recurring errors — drawn directly from corrections made during live sessions and notes taken throughout our work together. Over time, these logs reveal patterns: the same article dropped in the same construction, the same preposition swapped, the same tense used where another is needed.</p>
+  <p>Those patterns become the quiz. Each set of questions targets exactly the errors that came up most for that student — not a generic grammar textbook, but a precise record of what actually needs work. The result is a practice tool that feels specific because it is.</p>
+  <p>Every question includes instant feedback that names the rule and explains the reasoning, so students leave with a clearer mental model — not just a score.</p>
+</div>
+
+<div class="quiz-grid">
+
+  <a class="quiz-card" href="quizzes/Quiz_Startup_Founder.html">
+    <p class="quiz-card-role">Founder of an AI-based Startup</p>
+    <h2>Grammar Quiz</h2>
+    <div class="quiz-topics">
+      <span class="topic-tag">Articles</span>
+      <span class="topic-tag">Fewer / Less</span>
+      <span class="topic-tag">Embedded Questions</span>
+      <span class="topic-tag">Prepositions</span>
+      <span class="topic-tag">Worth + -ing</span>
+      <span class="topic-tag">Mixed Errors</span>
+    </div>
+    <p class="quiz-meta">24 questions &nbsp;·&nbsp; Multiple choice</p>
+    <span class="card-arrow">Take the quiz &rarr;</span>
+  </a>
+
+  <a class="quiz-card" href="quizzes/Quiz_Pharma_Owner.html">
+    <p class="quiz-card-role">Owner of a Pharmaceutical Company</p>
+    <h2>Error Correction Practice</h2>
+    <div class="quiz-topics">
+      <span class="topic-tag">Articles</span>
+      <span class="topic-tag">Gerunds &amp; Infinitives</span>
+      <span class="topic-tag">Adverb Placement</span>
+      <span class="topic-tag">Prepositions</span>
+      <span class="topic-tag">One of the + Plural</span>
+    </div>
+    <p class="quiz-meta">39 items &nbsp;·&nbsp; Fill-in-the-blank</p>
+    <span class="card-arrow">Take the quiz &rarr;</span>
+  </a>
+
+  <a class="quiz-card" href="quizzes/Quiz_Clinical_Psychologist.html">
+    <p class="quiz-card-role">Clinical Psychologist</p>
+    <h2>Grammar Quiz</h2>
+    <div class="quiz-topics">
+      <span class="topic-tag">"Enough" Word Order</span>
+      <span class="topic-tag">Articles</span>
+      <span class="topic-tag">Prepositions</span>
+      <span class="topic-tag">Verb Tenses</span>
+      <span class="topic-tag">Mixed Errors</span>
+    </div>
+    <p class="quiz-meta">20 questions &nbsp;·&nbsp; Multiple choice</p>
+    <span class="card-arrow">Take the quiz &rarr;</span>
+  </a>
+
+  <a class="quiz-card" href="quizzes/Quiz_Project_Manager.html">
+    <p class="quiz-card-role">Project Manager for a SaaS Firm</p>
+    <h2>Grammar Quiz</h2>
+    <div class="quiz-topics">
+      <span class="topic-tag">Articles &amp; Determiners</span>
+      <span class="topic-tag">Countable / Uncountable</span>
+      <span class="topic-tag">Verb Forms</span>
+      <span class="topic-tag">Word Order</span>
+      <span class="topic-tag">Confusable Words</span>
+    </div>
+    <p class="quiz-meta">25 questions &nbsp;·&nbsp; Multiple choice</p>
+    <span class="card-arrow">Take the quiz &rarr;</span>
+  </a>
+
+  <a class="quiz-card" href="quizzes/Quiz_FPNA_Manager.html">
+    <p class="quiz-card-role">FP&amp;A Manager at a Global Financial Institute</p>
+    <h2>Grammar Quiz</h2>
+    <div class="quiz-topics">
+      <span class="topic-tag">Articles</span>
+      <span class="topic-tag">Present Perfect</span>
+      <span class="topic-tag">Prepositions</span>
+      <span class="topic-tag">Collocations</span>
+      <span class="topic-tag">Word Order</span>
+    </div>
+    <p class="quiz-meta">22 questions &nbsp;·&nbsp; Multiple choice</p>
+    <span class="card-arrow">Take the quiz &rarr;</span>
+  </a>
+
+</div>
+
+<footer class="site-footer">
+  &copy; P-City English &nbsp;&middot;&nbsp; All materials by Benjamin Pfeifer &nbsp;&middot;&nbsp; <a href="https://www.pcityenglish.com" target="_blank" rel="noopener" style="color:var(--rule);text-decoration:none;">pcityenglish.com</a>
+</footer>
+
+</body>
+</html>

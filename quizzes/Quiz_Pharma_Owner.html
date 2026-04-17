@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Correction Practice — Owner of a Pharmaceutical Company</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, serif;
+    max-width: 820px;
+    margin: 40px auto;
+    padding: 0 28px 80px;
+    color: #222;
+    background: #fff;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    color: #1a3a5c;
+    border-bottom: 3px solid #2980b9;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    margin-top: 0;
+  }
+
+  .subtitle {
+    color: #888;
+    font-style: italic;
+    margin-bottom: 40px;
+    font-size: 0.93em;
+  }
+
+  .section { margin-top: 52px; }
+
+  h2 {
+    font-size: 1.1em;
+    color: white;
+    background: #2980b9;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-family: Georgia, serif;
+  }
+
+  .rule-box {
+    background: #eaf4fb;
+    border-left: 4px solid #2980b9;
+    padding: 12px 16px;
+    margin-bottom: 22px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.91em;
+    color: #333;
+  }
+
+  .rule-box strong { color: #1a3a5c; }
+
+  h3 {
+    font-size: 0.97em;
+    color: #1a3a5c;
+    margin: 26px 0 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .instructions {
+    font-size: 0.91em;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 14px;
+  }
+
+  /* ---- Items ---- */
+  .item {
+    margin: 13px 0;
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .item-num {
+    font-weight: bold;
+    color: #2980b9;
+    min-width: 24px;
+    flex-shrink: 0;
+  }
+
+  .item-body { flex: 1; line-height: 1.9; }
+
+  /* items that need a two-line layout (error on top, correction below) */
+  .item-stack {
+    margin: 16px 0;
+    padding-left: 30px;
+    position: relative;
+  }
+
+  .item-stack .item-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .bad-sentence {
+    color: #555;
+    font-style: italic;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .correction-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .arrow { color: #aaa; font-size: 0.9em; }
+
+  /* ---- Error word highlighting ---- */
+  .err {
+    color: #c0392b;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 3px;
+  }
+
+  /* ---- Inputs ---- */
+  input[type="text"] {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.95em;
+    font-family: Georgia, serif;
+    background: white;
+    transition: border-color 0.2s, background 0.2s;
+    vertical-align: baseline;
+  }
+
+  input[type="text"]:focus {
+    border-color: #2980b9;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41,128,185,0.12);
+  }
+
+  input[type="text"].correct {
+    border-color: #27ae60;
+    background: #f0faf4;
+  }
+
+  input[type="text"].incorrect {
+    border-color: #e74c3c;
+    background: #fdf4f4;
+  }
+
+  .hint {
+    font-size: 0.82em;
+    font-style: italic;
+    margin-left: 4px;
+    display: none;
+    white-space: nowrap;
+  }
+
+  .hint.ok  { color: #27ae60; display: inline; }
+  .hint.bad { color: #c0392b; display: inline; }
+
+  /* ---- Buttons ---- */
+  .btn-row {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .check-btn {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 9px 26px;
+    border-radius: 6px;
+    font-size: 0.93em;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    transition: background 0.2s;
+  }
+
+  .check-btn:hover { background: #1f6fa3; }
+
+  .reset-btn {
+    background: none;
+    color: #888;
+    border: 1px solid #ccc;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .reset-btn:hover { border-color: #999; color: #444; }
+
+  .score {
+    font-size: 0.92em;
+    color: #1a3a5c;
+    font-weight: bold;
+    min-height: 20px;
+    margin-top: 4px;
+    width: 100%;
+  }
+
+  hr { border: none; border-top: 1px solid #e5e5e5; margin: 50px 0; }
+</style>
+</head>
+<body>
+
+<h1>Error Correction Practice</h1>
+<p class="subtitle">Owner of a Pharmaceutical Company &nbsp;·&nbsp; P. City English &nbsp;·&nbsp; Based on class corrections</p>
+
+<!-- ================================================================
+     PART 1: ARTICLES
+     ================================================================ -->
+<div class="section">
+<h2>Part 1 — Articles &nbsp;(a / an / the / —)</h2>
+<div class="rule-box">
+  Use <strong>a</strong> (or <strong>an</strong> before vowel sounds) for singular countable nouns in general, or when mentioned for the first time.
+  Use <strong>the</strong> when both people know which specific thing is meant.
+  Write <strong>—</strong> (a dash) if no article is needed.
+  Don't forget: <em>a</em> few, <em>a</em> higher level, <em>the</em> mountains, <em>the</em> European Union.
+</div>
+
+<h3>Exercise A — Fill in the gap</h3>
+<p class="instructions">Write <em>a</em>, <em>an</em>, <em>the</em>, or — (dash) in each gap.</p>
+
+<div id="sec1a">
+  <div class="item">
+    <span class="item-num">1.</span>
+    <span class="item-body">I have <input type="text" size="4" data-answers="a" placeholder="___"> huge problem at work.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">2.</span>
+    <span class="item-body">She went hiking in <input type="text" size="4" data-answers="the" placeholder="___"> mountains near Zakopane.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">3.</span>
+    <span class="item-body">It was <input type="text" size="4" data-answers="a" placeholder="___"> wonderful time in Italy.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">4.</span>
+    <span class="item-body">Poland joined <input type="text" size="4" data-answers="the" placeholder="___"> European Union in 2004.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">5.</span>
+    <span class="item-body">I called her <input type="text" size="4" data-answers="a" placeholder="___"> few days ago.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">6.</span>
+    <span class="item-body">It was <input type="text" size="4" data-answers="a" placeholder="___"> terrible few weeks for everyone.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">7.</span>
+    <span class="item-body">We went to <input type="text" size="4" data-answers="the" placeholder="___"> theater last Saturday.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">8.</span>
+    <span class="item-body">I saw <input type="text" size="4" data-answers="an" placeholder="___"> interesting documentary last night.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">9.</span>
+    <span class="item-body"><input type="text" size="4" data-answers="the" placeholder="___"> birth rate in Poland has been falling for years.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">10.</span>
+    <span class="item-body">She's working on <input type="text" size="4" data-answers="a" placeholder="___"> higher level now.<span class="hint"></span></span>
+  </div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSection('sec1a')">Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec1a')">Reset</button>
+    <span class="score" id="score-sec1a"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ================================================================
+     PART 2: GERUNDS / INFINITIVES
+     ================================================================ -->
+<div class="section">
+<h2>Part 2 — Verb Forms: Gerund (-ing) or Infinitive (to …)</h2>
+<div class="rule-box">
+  After certain verbs, use the <strong>gerund (-ing)</strong>: <em>enjoy, imagine, suggest, can't help</em>.<br>
+  After others, use the <strong>infinitive (to + verb)</strong>: <em>want, decide, hope, need, plan</em>.<br>
+  Some verbs take <em>either</em> form: <em>love, like, start, begin, continue</em>.<br>
+  Never use the base verb alone: <em>I love <u>play</u></em> ✗ → <em>I love <strong>playing</strong></em> ✓
+</div>
+
+<h3>Exercise A — Fill in the gap</h3>
+<p class="instructions">Write the correct form of the verb in brackets. Where both forms are possible, either is accepted.</p>
+
+<div id="sec2a">
+  <div class="item">
+    <span class="item-num">1.</span>
+    <span class="item-body">I love <input type="text" size="13" data-answers="playing|to play" placeholder="(play)"> basketball on weekends.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">2.</span>
+    <span class="item-body">She needs to start <input type="text" size="13" data-answers="speaking|to speak" placeholder="(speak)"> more English at work.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">3.</span>
+    <span class="item-body">He decided <input type="text" size="13" data-answers="to quit" placeholder="(quit)"> his job and travel the world.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">4.</span>
+    <span class="item-body">I enjoy <input type="text" size="13" data-answers="watching" placeholder="(watch)"> movies in English.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">5.</span>
+    <span class="item-body">She wants <input type="text" size="13" data-answers="to improve" placeholder="(improve)"> her vocabulary this year.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">6.</span>
+    <span class="item-body">I can't imagine <input type="text" size="13" data-answers="living" placeholder="(live)"> without my morning coffee.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">7.</span>
+    <span class="item-body">They suggested <input type="text" size="13" data-answers="using" placeholder="(use)"> a different approach for the project.<span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">8.</span>
+    <span class="item-body">I love <input type="text" size="13" data-answers="spending|to spend" placeholder="(spend)"> time with my family in the mountains.<span class="hint"></span></span>
+  </div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSection('sec2a')">Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec2a')">Reset</button>
+    <span class="score" id="score-sec2a"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ================================================================
+     PART 3: WORD ORDER (ADVERBS)
+     ================================================================ -->
+<div class="section">
+<h2>Part 3 — Adverb Placement</h2>
+<div class="rule-box">
+  Adverbs of manner (<em>carefully, quickly, slowly, politely…</em>) go <strong>after the object</strong>, not between the verb and the object.<br>
+  ✗ <em>She explained carefully the rules.</em> &nbsp;✓ <em>She explained the rules carefully.</em><br><br>
+  Also, in normal statements, adjectives and adverbs do <strong>not</strong> go before the subject.<br>
+  ✗ <em>Very popular is yoga.</em> &nbsp;✓ <em>Yoga is very popular.</em>
+</div>
+
+<h3>Exercise A — Rewrite the sentence</h3>
+<p class="instructions">Each sentence has a word-order error (shown in <span class="err" style="font-size:0.95em">red</span>). Type the corrected sentence. No capital letter or period needed.</p>
+
+<div id="sec3a">
+  <div class="item-stack">
+    <span class="item-num">1.</span>
+    <span class="bad-sentence">She explained <span class="err">very carefully the rules</span>.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="she explained the rules very carefully" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">2.</span>
+    <span class="bad-sentence">He completed <span class="err">very quickly the report</span>.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="he completed the report very quickly" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">3.</span>
+    <span class="bad-sentence">I read <span class="err">very slowly the article</span>.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="i read the article very slowly" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">4.</span>
+    <span class="bad-sentence">She prepared <span class="err">very thoroughly the documents</span>.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="she prepared the documents very thoroughly" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">5.</span>
+    <span class="bad-sentence">I answered <span class="err">very politely the email</span>.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="i answered the email very politely" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">6.</span>
+    <span class="bad-sentence"><span class="err">Now very popular in Poland is</span> yoga.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="yoga is very popular in poland now|yoga is now very popular in poland" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="item-stack">
+    <span class="item-num">7.</span>
+    <span class="bad-sentence"><span class="err">Very difficult was</span> the presentation.</span>
+    <div class="correction-row">
+      <span class="arrow">→</span>
+      <input type="text" size="46" data-answers="the presentation was very difficult" placeholder="Type the corrected sentence">
+      <span class="hint"></span>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSection('sec3a')">Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec3a')">Reset</button>
+    <span class="score" id="score-sec3a"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ================================================================
+     PART 4: PREPOSITIONS
+     ================================================================ -->
+<div class="section">
+<h2>Part 4 — Prepositions</h2>
+<div class="rule-box">
+  Some verbs take <strong>no preposition</strong> where Polish uses one:<br>
+  <em>join the company</em> (not "join <u>to</u>"), &nbsp;<em>call someone</em> (not "call <u>to</u>"), &nbsp;<em>discuss the issue</em> (not "discuss <u>about</u>"), &nbsp;<em>despite the weather</em> (not "despite <u>of</u>").<br><br>
+  Others require a <strong>specific preposition</strong>:<br>
+  <em>take care <strong>of</strong></em> (not "about"), &nbsp;<em><strong>at</strong> the beginning / at the end</em> (not "on").
+</div>
+
+<h3>Exercise A — Fix the preposition</h3>
+<p class="instructions">The <span class="err" style="font-size:0.95em">underlined word</span> is a wrong or extra preposition. Write the correct preposition — or <strong>X</strong> if no preposition is needed there.</p>
+
+<div id="sec4a">
+  <div class="item">
+    <span class="item-num">1.</span>
+    <span class="item-body">She joined <span class="err">to</span> the company three years ago. → <input type="text" size="8" data-answers="x" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">2.</span>
+    <span class="item-body">I called <span class="err">to</span> my manager this morning. → <input type="text" size="8" data-answers="x" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">3.</span>
+    <span class="item-body">We discussed <span class="err">about</span> the budget at the meeting. → <input type="text" size="8" data-answers="x" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">4.</span>
+    <span class="item-body">Despite <span class="err">of</span> the difficult conditions, they finished on time. → <input type="text" size="8" data-answers="x" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">5.</span>
+    <span class="item-body">She takes care <span class="err">about</span> her elderly parents every weekend. → <input type="text" size="8" data-answers="of" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">6.</span>
+    <span class="item-body"><span class="err">On</span> the beginning of every meeting, we review the agenda. → <input type="text" size="8" data-answers="at" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">7.</span>
+    <span class="item-body">We'll share the results <span class="err">on</span> the end of the week. → <input type="text" size="8" data-answers="at" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">8.</span>
+    <span class="item-body">I need to take care <span class="err">about</span> a few things before I leave. → <input type="text" size="8" data-answers="of" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSection('sec4a')">Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec4a')">Reset</button>
+    <span class="score" id="score-sec4a"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ================================================================
+     PART 5: ONE OF THE + PLURAL
+     ================================================================ -->
+<div class="section">
+<h2>Part 5 — "One of the …" + plural noun</h2>
+<div class="rule-box">
+  After <strong>"one of the"</strong>, the noun must always be <strong>plural</strong>.<br>
+  ✗ <em>one of the best <u>employee</u></em> &nbsp;→&nbsp; ✓ <em>one of the best <strong>employees</strong></em><br>
+  The verb that follows stays singular because the subject is still <em>one</em>: <em>She is one of the best employees.</em>
+</div>
+
+<h3>Exercise A — Correct the noun</h3>
+<p class="instructions">The <span class="err" style="font-size:0.95em">underlined noun</span> should be plural. Write the correct form.</p>
+
+<div id="sec5a">
+  <div class="item">
+    <span class="item-num">1.</span>
+    <span class="item-body">She's one of the best <span class="err">employee</span> in the company. → <input type="text" size="14" data-answers="employees" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">2.</span>
+    <span class="item-body">It's one of the biggest <span class="err">wholesaler</span> in Poland. → <input type="text" size="14" data-answers="wholesalers" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">3.</span>
+    <span class="item-body">He's one of the most experienced <span class="err">manager</span> on the team. → <input type="text" size="14" data-answers="managers" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">4.</span>
+    <span class="item-body">This is one of the most beautiful <span class="err">place</span> I've ever visited. → <input type="text" size="14" data-answers="places" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">5.</span>
+    <span class="item-body">She's one of the most dedicated <span class="err">student</span> in the class. → <input type="text" size="14" data-answers="students" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="item">
+    <span class="item-num">6.</span>
+    <span class="item-body">It's one of the oldest <span class="err">building</span> in Warsaw. → <input type="text" size="14" data-answers="buildings" placeholder="?"><span class="hint"></span></span>
+  </div>
+  <div class="btn-row">
+    <button class="check-btn" onclick="checkSection('sec5a')">Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec5a')">Reset</button>
+    <span class="score" id="score-sec5a"></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+  function normalize(str) {
+    return str.trim().toLowerCase().replace(/[.!?,]+$/, '').trim();
+  }
+
+  function displayAnswer(ans) {
+    if (ans === 'x') return 'X (no preposition needed)';
+    return ans;
+  }
+
+  function checkSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const inputs = section.querySelectorAll('input[type="text"]');
+    let correct = 0;
+    let answered = 0;
+
+    inputs.forEach(input => {
+      const raw = input.value;
+      if (!raw.trim()) {
+        input.classList.remove('correct', 'incorrect');
+        const hint = input.nextElementSibling;
+        if (hint && hint.classList.contains('hint')) {
+          hint.className = 'hint';
+          hint.textContent = '';
+          hint.style.display = 'none';
+        }
+        return;
+      }
+
+      answered++;
+      const userAnswer = normalize(raw);
+      const acceptedAnswers = input.dataset.answers.split('|').map(a => normalize(a));
+      const hint = input.nextElementSibling;
+
+      if (acceptedAnswers.includes(userAnswer)) {
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+        correct++;
+        if (hint && hint.classList.contains('hint')) {
+          hint.className = 'hint ok';
+          hint.textContent = '✓';
+          hint.style.display = 'inline';
+        }
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+        if (hint && hint.classList.contains('hint')) {
+          hint.className = 'hint bad';
+          hint.textContent = '✗  →  ' + displayAnswer(acceptedAnswers[0]);
+          hint.style.display = 'inline';
+        }
+      }
+    });
+
+    const scoreEl = document.getElementById('score-' + sectionId);
+    if (scoreEl) {
+      if (answered === 0) {
+        scoreEl.textContent = '';
+      } else {
+        scoreEl.textContent = `Score: ${correct} / ${answered} correct`;
+      }
+    }
+  }
+
+  function resetSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const inputs = section.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'incorrect');
+      const hint = input.nextElementSibling;
+      if (hint && hint.classList.contains('hint')) {
+        hint.className = 'hint';
+        hint.textContent = '';
+        hint.style.display = 'none';
+      }
+    });
+    const scoreEl = document.getElementById('score-' + sectionId);
+    if (scoreEl) scoreEl.textContent = '';
+  }
+</script>
+
+</body>
+</html>
